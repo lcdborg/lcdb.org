@@ -13,11 +13,6 @@ import Magnify from 'mdi-material-ui/Magnify'
 // ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
 
-// ** Components
-import ModeToggler from 'src/@core/layouts/components/shared-components/ModeToggler'
-import UserDropdown from 'src/@core/layouts/components/shared-components/UserDropdown'
-import NotificationDropdown from 'src/@core/layouts/components/shared-components/NotificationDropdown'
-
 interface Props {
   hidden: boolean
   settings: Settings
@@ -27,7 +22,7 @@ interface Props {
 
 const AppBarContent = (props: Props) => {
   // ** Props
-  const { hidden, settings, saveSettings, toggleNavVisibility } = props
+  const { hidden, toggleNavVisibility } = props
 
   // ** Hook
   const hiddenSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
@@ -57,6 +52,7 @@ const AppBarContent = (props: Props) => {
         />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
+{/*
         {hiddenSm ? null : (
           <Box
             component='a'
@@ -75,6 +71,7 @@ const AppBarContent = (props: Props) => {
         <ModeToggler settings={settings} saveSettings={saveSettings} />
         <NotificationDropdown />
         <UserDropdown />
+        */}
       </Box>
     </Box>
   )

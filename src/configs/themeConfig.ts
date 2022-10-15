@@ -17,9 +17,9 @@ type ThemeConfig = {
 
 const themeConfig: ThemeConfig = {
   // ** Layout Configs
-  templateName: 'Materio' /* App Name */,
+  templateName: 'LCDB' /* App Name */,
   mode: 'light' /* light | dark */,
-  contentWidth: 'boxed' /* full | boxed */,
+  contentWidth: 'full' /* full | boxed */,
 
   // ** Routing Configs
   routingLoader: true /* true | false */,

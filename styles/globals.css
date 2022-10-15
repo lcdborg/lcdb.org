@@ -22,3 +22,67 @@ code:not([class*='language-']):after {
 code[class*='language-'] {
   padding: 0;
 }
+
+@font-face{
+  font-family:Iconochive-Regular;
+  src:url("https://archive.org/includes/fonts/Iconochive-Regular.eot?-ccsheb");
+  src:url("https://archive.org/includes/fonts/Iconochive-Regular.eot?#iefix-ccsheb") format("embedded-opentype"),url("https://archive.org/includes/fonts/Iconochive-Regular.woff?-ccsheb") format("woff"),url("https://archive.org/includes/fonts/Iconochive-Regular.ttf?-ccsheb") format("truetype"),url("https://archive.org/includes/fonts/Iconochive-Regular.svg?-ccsheb#Iconochive-Regular") format("svg");
+  font-weight:400;
+  font-style:normal
+}
+
+.iconochive {
+  font-family:Iconochive-Regular;
+  font-style:normal;
+  font-weight:400;
+  font-variant:normal;
+  text-transform:none;
+  line-height:1;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  color: black;
+}
+
+.iconochive-logo:before{
+  content:"\1F3DB";
+}
+
+.nav-link:hover {
+  background-color: blue;
+}
+
+.alphabet {
+  padding-right: 1em;
+}
+
+.alphabet-active {
+  text-decoration: underline;
+}
+
+.pagination-link {
+  padding-right: 1em;
+}
+
+.pagination-link-active {
+  text-decoration: underline;
+}
+
+.artist-block {
+  display: block;
+}
+
+.year-link {
+  padding-right: 1em;
+}
+
+.year-link-active {
+  text-decoration: underline;
+}
+
+.source-link {
+  padding-right: 1em;
+}
+
+.table-double-striped tr:nth-child(4n+1), .table-double-striped tr:nth-child(4n+2) {
+  background: #f9f9f9;
+}
