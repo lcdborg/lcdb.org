@@ -13,7 +13,7 @@ const GlobalStyles = (theme: Theme) => {
       '& .ps__thumb-y': {
         right: '3px !important',
         left: 'auto !important',
-        backgroundColor: theme.palette.mode === 'light' ? '#C2C4D1 !important' : '#504B6D !important'
+        backgroundColor: theme.palette.mode === 'light' ? '#ffffff !important' : '#504B6D !important'
       },
       '.layout-vertical-nav &': {
         '& .ps__thumb-y': {

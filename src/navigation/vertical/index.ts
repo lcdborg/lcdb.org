@@ -25,7 +25,7 @@ const navigation = (): VerticalNavItemsType => {
       path: '/artist-groups'
     },
     {
-      title: 'Artist Group Sources',
+      title: 'Source Artist Groups',
       icon: AccountOutline,
       path: '/source-artist-groups'
     }
