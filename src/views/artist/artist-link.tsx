@@ -3,11 +3,16 @@ import Link from "next/link";
 export default function ArtistLink(props: any) {
   const artist = props.artist;
 
+  const pathname = '/artist/' + props.artist.id;
+  let query = {};
+
+  if (props.year) {
+    query = {year: props.year};
+  }
+
   return (
     <Link
-      href={{
-        pathname: '/artist/' + artist.id
-      }}
+      href={{pathname, query}}
     >
       {artist.name}
     </Link>

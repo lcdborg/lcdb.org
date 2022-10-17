@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import { graphql } from '../../utils/graphql';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import PerformanceListTable from 'src/views/aritst-group/performance-list-table';
@@ -85,16 +84,12 @@ const NavButtons = (props: any) => {
 
   if ( props.graphql.data.sourceCount) {
     buttons.push((
-      <Button>
-        <Link
+      <Button
+          variant="contained"
           key="sources"
-          href={{
-            pathname: "/artist-group-sources/" + props.graphql.data.artist.id,
-            query: {year: props.year}
-          }}
+          href={'/artist-group-sources/' + props.graphql.data.artist.id + '?year=' + props.year}
         >
-          <a className="btn btn-primary btn-sm">Artist Group Sources</a>
-        </Link>
+          Artist Group Sources
       </Button>
     ))
   }
@@ -102,18 +97,13 @@ const NavButtons = (props: any) => {
   if (props.graphql.data.artistGroupArtists) {
     props.graphql.data.artistGroupArtists.map((edge: any, key: any) => {
       buttons.push((
-        <Button>
-          <Link
-            key={key}
-            href={{
-              pathname: "/artist/" + edge.id,
-              query: {year: props.year}
-            }}
-          >
-            <a className="btn btn-secondary btn-sm">
-              {edge.name}
-            </a>
-          </Link>
+        <Button
+          variant="contained"
+          key={key}
+          href={'/artist/' + edge.id + '?year=' + props.year}
+          color="warning"
+        >
+          {edge.name}
         </Button>
       ));
     });
@@ -121,9 +111,11 @@ const NavButtons = (props: any) => {
 
   buttons.push((
     <Button
+      variant="contained"
       key="toggle-sets"
       className="btn btn-info btn-sm"
       onClick={props.toggleSets}
+      color="info"
     >
       Toggle Sets
     </Button>

@@ -1,0 +1,190 @@
+import Head from 'next/head';
+import { graphql } from '../../utils/graphql';
+import Link from 'next/link';
+import { PaginationControls} from '../../utils/pagination';
+import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { ListTable } from 'src/views/artist-group-sources/list-table';
+
+export async function getServerSideProps(context: any) {
+  const query = `
+    query ArtistGroupSources($id: Int!, $after: String = "LTE=") {
+      years: artistGroupSourceYears(id: $id)
+
+      artistGroupArtists(id: $id) {
+        id
+        name
+      }
+
+      artist: artistGroup (id: $id) {
+        id
+        name: title
+        header
+        footer
+      }
+
+      sources (filter: {_after: $after}) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+        }
+        totalCount
+        edges {
+          node {
+            id
+            createdAt
+            updatedAt
+
+            circdate
+            shndiskcount
+            wavdiskcount
+            archiveIdentifier
+
+            comments
+            textdoc
+
+            mediaSize
+            mediaSizeUncompressed
+
+            performance {
+              id
+              date
+              year
+              venue
+              city
+              state
+              artist {
+                id
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  async function getLatestYear() {
+    const latestYearQuery = `
+    query ArtistGroupSourceLatestYear($id: Int!) {
+      latestYear: artistGroupSourceLatestYear(id: $id)
+      }
+    `;
+
+    const result = await graphql(latestYearQuery, {id});
+
+    return result.data.latestYear;
+  }
+
+  const page = Number(context.query.page) || 1;
+  const id = Number(context.query.id);
+  let year = Number(context.query.year);
+  const after = Buffer.from(String((page - 1) * 300 - 1)).toString('base64')
+
+  if (! year) {
+    year = await getLatestYear();
+  }
+
+  const graphqlResult = await graphql(query, {id, year, after}, 'ArtistGroupSources');
+
+  return {
+    props: {
+      graphql: graphqlResult,
+      year,
+      id,
+      page
+    },
+  }
+}
+
+const NavButtons = (props: any) => {
+  const buttons: any[] = [];
+
+  buttons.push((
+    <Button
+      href={'/artist-group/' + props.graphql.data.artist.id}
+      variant="contained"
+    >
+      Artist Group Performances
+    </Button>
+  ));
+
+  if (props.graphql.data.artistGroupArtists) {
+    props.graphql.data.artistGroupArtists.map((node: any, key: any) => {
+      buttons.push((
+        <Button
+          key={key}
+          href={'/sources/' + node.id + '?year=' + props.year}
+          variant="contained"
+          color="warning"
+        >
+          {node.name} Sources
+        </Button>
+      ));
+    });
+  }
+
+  return (
+    <div>
+      {buttons}
+    </div>
+  );
+}
+
+const Years = (props: any) => {
+  const years: any[] = [];
+
+  props.graphql.data.years.map((year: any, key: any) => {
+    years.push((
+      <Link
+        key={key}
+        href={{
+          pathname: '/artist-group-sources/' + props.graphql.data.artist.id,
+          query: {year}
+        }}
+      >
+        <a className="year-link">{(year === 1939) ? 'unknown' : year}</a>
+      </Link>
+    ));
+  });
+
+  return (
+    <>{years}</>
+  );
+}
+
+function ArtistGroupSources(props: any) {
+  return (
+    <>
+      <Head>
+        <title>LCDB: Sources for {props.graphql.data.artist.name}</title>
+      </Head>
+
+      <Grid container spacing={6}>
+        <Grid item xs={12} md={12}>
+          <Card sx={{ position: 'relative' }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                Sources for Artist Group {props.graphql.data.artist.name}
+              </Typography>
+
+              <NavButtons year={props.year} graphql={props.graphql}></NavButtons>
+              <Years graphql={props.graphql}></Years>
+
+              <PaginationControls
+                graphql={props.graphql.data.sources}
+                page={props.page}
+                pathname={'/artist-group-sources/' + props.graphql.data.artist.id}
+                baseQuery={{year: props.year}}>
+              </PaginationControls>
+
+              <hr />
+              <ListTable graphql={props.graphql}></ListTable>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </>
+  );
+}
+
+export default ArtistGroupSources

@@ -27,23 +27,19 @@ export default function ListTable(props: any) {
             <Grid container>
               <Grid item xs={3} md={3}>
                 <b>Set 1</b>
-                <br />
-                {edge.node.set1}
+                <div dangerouslySetInnerHTML={{ __html: edge.node.set1}} />
               </Grid>
               <Grid item xs={3} md={3}>
                 <b>Set 2</b>
-                <br />
-                {edge.node.set2}
+                <div dangerouslySetInnerHTML={{ __html: edge.node.set2}} />
               </Grid>
               <Grid item xs={3} md={3}>
                 <b>Set 3</b>
-                <br />
-                {edge.node.set3}
+                <div dangerouslySetInnerHTML={{ __html: edge.node.set3}} />
               </Grid>
               <Grid item xs={3} md={3}>
                 <b>Comment</b>
-                <br />
-                {edge.node.comment}
+                <div dangerouslySetInnerHTML={{ __html: edge.node.comment}} />
               </Grid>
             </Grid>
           </td>

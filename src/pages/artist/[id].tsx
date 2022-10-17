@@ -85,16 +85,12 @@ const NavButtons = (props: any) => {
 
   if ( props.graphql.data.sourceCount) {
     buttons.push((
-      <Button>
-        <Link
-          key="sources"
-          href={{
-            pathname: "/sources/" + props.graphql.data.artist.id,
-            query: {year: props.year}
-          }}
-        >
-          <a className="btn btn-primary btn-sm">Sources</a>
-        </Link>
+      <Button
+        variant="contained"
+        key="sources"
+        href={'/sources/' + props.graphql.data.artist.id + '?year=' + props.year}
+      >
+        Sources
       </Button>
     ))
   }
@@ -102,18 +98,13 @@ const NavButtons = (props: any) => {
   if (props.graphql.data.artist.artistToArtistGroups && props.graphql.data.artist.artistToArtistGroups.edges) {
     props.graphql.data.artist.artistToArtistGroups.edges.map((edge: any, key: any) => {
       buttons.push((
-        <Button>
-          <Link
-            key={key}
-            href={{
-              pathname: "/artist-group/" + edge.node.artistGroup.id,
-              query: {year: props.year}
-            }}
-          >
-            <a className="btn btn-secondary btn-sm">
-              {edge.node.artistGroup.title} Artist Group
-            </a>
-          </Link>
+        <Button
+          key={key}
+          href={'/artist-group/' + edge.node.artistGroup.id + '?year=' + props.year}
+          color="warning"
+          variant="contained"
+        >
+          {edge.node.artistGroup.title} Artist Group
         </Button>
       ));
     });
@@ -124,6 +115,8 @@ const NavButtons = (props: any) => {
       key="toggle-sets"
       className="btn btn-info btn-sm"
       onClick={props.toggleSets}
+      color="info"
+      variant="contained"
     >
       Toggle Sets
     </Button>
