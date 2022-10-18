@@ -2,7 +2,7 @@ import { Grid, Typography } from "@mui/material";
 import nl2br from "src/utils/nl2br";
 import Venue from "../performance/venue";
 import ArtistLink from "../artist/artist-link";
-import performanceDate from "../performance/performance-date";
+import { PerformanceLink } from "../performance/performance-link";
 
 export default function Details(props: any) {
   return (
@@ -10,9 +10,9 @@ export default function Details(props: any) {
       <Typography gutterBottom variant="h5" component="div">
         <ArtistLink artist={props.source.performance.artist} year={props.source.performance.year}></ArtistLink>
         &nbsp;
-        {performanceDate(props.source.performance)}
+        <PerformanceLink performance={props.source.performance}></PerformanceLink>
         &nbsp;
-        {String(props.source.id)}
+        SHNID {String(props.source.id)}
       </Typography>
 
       <Typography gutterBottom variant="h5" component="div">
