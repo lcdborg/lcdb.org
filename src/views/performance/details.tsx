@@ -3,16 +3,15 @@ import nl2br from "src/utils/nl2br";
 import Venue from "./venue";
 import ListTable from "src/views/source/list-table";
 import ArtistLink from "../artist/artist-link";
-import PerformanceDate from "./performance-date";
+import performanceDate from "./performance-date";
 
 export default function Details(props: any) {
-
   return (
     <>
       <Typography gutterBottom variant="h5" component="div">
         <ArtistLink artist={props.performance.artist} year={props.performance.year}></ArtistLink>
         &nbsp;
-        <PerformanceDate performance={props.performance}></PerformanceDate>
+        {performanceDate(props.performance)}
       </Typography>
 
       <Typography gutterBottom variant="h5" component="div">

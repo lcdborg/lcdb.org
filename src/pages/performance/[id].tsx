@@ -2,7 +2,7 @@ import { Card, CardContent, Grid } from "@mui/material";
 import Head from "next/head";
 import { graphql } from "src/utils/graphql";
 import Details from "src/views/performance/details";
-import PerformanceDate from "src/views/performance/performance-date";
+import performanceDate from "src/views/performance/performance-date";
 
 export async function getServerSideProps(context: any) {
   const query = `
@@ -85,8 +85,10 @@ function Performance(props: any) {
       <Head>
         <title>
           LCDB: Performance
+          &nbsp;
           {props.graphql.data.performance.artist.name}
-          <PerformanceDate performance={props.graphql.data.performance}></PerformanceDate>
+          &nbsp;
+          {performanceDate(props.graphql.data.performance)}
         </title>
       </Head>
 
