@@ -5,7 +5,7 @@ import SourceLink from "./source-link";
 export default function ListTable(props: any) {
   const rows: any[] = [];
 
-  props.graphql.data.sources.edges.map((edge: any, key: any) => {
+  props.sources.edges.map((edge: any, key: any) => {
     rows.push((
       <>
       <tr key={key + "a"}>

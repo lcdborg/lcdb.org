@@ -176,7 +176,7 @@ function ArtistSources(props: any) {
 
               <hr />
 
-              <ListTable graphql={props.graphql}></ListTable>
+              <ListTable sources={props.graphql.data.sources}></ListTable>
             </CardContent>
           </Card>
         </Grid>
