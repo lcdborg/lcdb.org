@@ -29,7 +29,6 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 
 // ** Global css styles
 import '../../styles/globals.css'
-import GoogleAnalytics from 'src/@core/utils/google-analytics'
 
 // ** Extend App Props with Emotion
 type ExtendedAppProps = AppProps & {
