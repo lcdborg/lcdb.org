@@ -18,6 +18,8 @@ export async function getServerSideProps(context: any) {
         set2
         set3
         comment
+        createdAt
+        updatedAt
         sources {
           edges {
             node {

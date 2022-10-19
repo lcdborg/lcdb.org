@@ -4,6 +4,7 @@ import Venue from "./venue";
 import ListTable from "src/views/source/list-table";
 import ArtistLink from "../artist/artist-link";
 import performanceDate from "./performance-date";
+import dateFormat from "src/utils/date-format";
 
 export default function Details(props: any) {
   return (
@@ -52,6 +53,19 @@ export default function Details(props: any) {
           <strong>Sources</strong>
           <div>
             <ListTable sources={props.performance.sources}></ListTable>
+          </div>
+        </Grid>
+
+        <Grid item xs={6} md={6}  style={{fontSize: '.8em'}}>
+          <strong>Created At</strong>
+          <div>
+            {dateFormat(props.performance.createdAt)}
+          </div>
+        </Grid>
+        <Grid item xs={6} md={6} style={{fontSize: '.8em'}}>
+          <strong>Updated At</strong>
+          <div>
+            {dateFormat(props.performance.updatedAt)}
           </div>
         </Grid>
       </Grid>

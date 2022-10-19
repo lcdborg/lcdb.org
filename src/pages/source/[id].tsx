@@ -11,6 +11,7 @@ export async function getServerSideProps(context: any) {
         id
         createdAt
         updatedAt
+        enterUsername
 
         circdate
         shndiskcount
