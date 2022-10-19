@@ -29,6 +29,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 
 // ** Global css styles
 import '../../styles/globals.css'
+import GoogleAnalytics from 'src/@core/utils/google-analytics'
 
 // ** Extend App Props with Emotion
 type ExtendedAppProps = AppProps & {
@@ -66,8 +67,9 @@ const App = (props: ExtendedAppProps) => {
           name='description'
           content={`${themeConfig.templateName}`}
         />
-        <meta name='keywords' content='etreedb live concerts recordings' />
+        <meta name='keywords' content='live concert database etreedb live concerts recordings' />
         <meta name='viewport' content='initial-scale=1, width=device-width' />
+
       </Head>
 
       <SettingsProvider>

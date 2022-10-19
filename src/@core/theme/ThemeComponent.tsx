@@ -21,6 +21,7 @@ import themeOptions from './ThemeOptions'
 
 // ** Global Styles
 import GlobalStyling from './globalStyles'
+import GoogleAnalytics from '../utils/google-analytics'
 
 interface Props {
   settings: Settings
@@ -51,6 +52,7 @@ const ThemeComponent = (props: Props) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <GoogleAnalytics></GoogleAnalytics>
       <GlobalStyles styles={() => GlobalStyling(theme) as any} />
       {children}
     </ThemeProvider>
