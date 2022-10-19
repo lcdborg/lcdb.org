@@ -5,6 +5,7 @@ import ArtistLink from "../artist/artist-link";
 import { PerformanceLink } from "../performance/performance-link";
 import dateFormat from "src/utils/date-format";
 import MediaSize from "./media-size";
+import Checksums from "./checksums";
 
 export default function Details(props: any) {
   return (
@@ -32,7 +33,7 @@ export default function Details(props: any) {
         <Grid item xs={12} md={12}>
           <hr />
           <strong>Textdoc</strong>
-          <div>
+          <div style={{fontSize: '.8em', fontFamily: "'Courier Prime', Courier"}}>
             {nl2br(props.source.textdoc)}
           </div>
         </Grid>
@@ -85,6 +86,8 @@ export default function Details(props: any) {
           </div>
         </Grid>
       </Grid>
+
+      <Checksums checksums={props.source.checksums}></Checksums>
     </>
   )
 }

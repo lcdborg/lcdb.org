@@ -23,6 +23,8 @@ code[class*='language-'] {
   padding: 0;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
 @font-face{
   font-family:Iconochive-Regular;
   src:url("https://archive.org/includes/fonts/Iconochive-Regular.eot?-ccsheb");

@@ -9,6 +9,7 @@ import createEmotionServer from '@emotion/server/create-instance'
 
 // ** Utils Imports
 import { createEmotionCache } from 'src/@core/utils/create-emotion-cache'
+import GoogleAnalytics from 'src/@core/utils/google-analytics'
 
 class CustomDocument extends Document {
   render() {
@@ -27,6 +28,7 @@ class CustomDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <GoogleAnalytics />
         </body>
       </Html>
     )

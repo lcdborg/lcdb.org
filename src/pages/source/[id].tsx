@@ -12,17 +12,26 @@ export async function getServerSideProps(context: any) {
         createdAt
         updatedAt
         enterUsername
-
         circdate
         shndiskcount
         wavdiskcount
         archiveIdentifier
-
         comments
         textdoc
-
         mediaSize
         mediaSizeUncompressed
+
+        checksums {
+          edges {
+            node {
+              description
+              body
+              createdAt
+              id
+            }
+          }
+        }
+
         performance {
           id
           date
