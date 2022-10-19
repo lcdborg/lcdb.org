@@ -1,4 +1,5 @@
 import { Grid, Typography } from "@mui/material";
+import nl2br from "src/utils/nl2br";
 
 export default function Checksums(props: any) {
   if (! props.checksums) {
@@ -12,7 +13,7 @@ export default function Checksums(props: any) {
         <strong>{edge.node.description}</strong>
         <br />
         <div style={{fontSize: '.8em', fontFamily: "'Courier Prime', Courier"}}>
-          {edge.node.body}
+          {nl2br(edge.node.body)}
         </div>
       </Grid>
     ));
