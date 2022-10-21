@@ -27,6 +27,12 @@ export default function Details(props: any) {
         <Grid item xs={12} md={12}>
           <hr />
           <strong>Summary</strong>
+          &nbsp;
+          <span>
+            (<Link href={'https://graphql.lcdb.org/api/source/' + String(props.source.id) + '/download'}>
+              download all files
+            </Link>)
+          </span>
           <div>
             {nl2br(props.source.comments)}
           </div>
