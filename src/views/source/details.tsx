@@ -6,6 +6,7 @@ import { PerformanceLink } from "../performance/performance-link";
 import dateFormat from "src/utils/date-format";
 import MediaSize from "./media-size";
 import Checksums from "./checksums";
+import Link from "next/link";
 
 export default function Details(props: any) {
   return (
@@ -33,6 +34,12 @@ export default function Details(props: any) {
         <Grid item xs={12} md={12}>
           <hr />
           <strong>Textdoc</strong>
+          &nbsp;
+          <span>
+            (<Link href={'https://graphql.lcdb.org/api/source/' + String(props.source.id) + '/textdoc/download'}>
+              download
+            </Link>)
+          </span>
           <div style={{fontSize: '.8em', fontFamily: "'Courier Prime', Courier"}}>
             {nl2br(props.source.textdoc)}
           </div>
