@@ -7,16 +7,18 @@ import dateFormat from "src/utils/date-format";
 import MediaSize from "./media-size";
 import Checksums from "./checksums";
 import Link from "next/link";
+import ArchiveIdentifier from "./archive-identifier";
 
 export default function Details(props: any) {
   return (
     <>
       <Typography gutterBottom variant="h5" component="div">
+        <ArchiveIdentifier identifier={props.source.archiveIdentifier}></ArchiveIdentifier>
         <ArtistLink artist={props.source.performance.artist} year={props.source.performance.year}></ArtistLink>
         &nbsp;
         <PerformanceLink performance={props.source.performance}></PerformanceLink>
         &nbsp;
-        SHNID {String(props.source.id)}
+        (SHNID {String(props.source.id)})
       </Typography>
 
       <Typography gutterBottom variant="h5" component="div">
@@ -40,15 +42,15 @@ export default function Details(props: any) {
         <Grid item xs={12} md={12}>
           <hr />
           <strong>Textdoc</strong>
-          &nbsp;
+          {' '}
           <span>
             (<Link href={'https://graphql.lcdb.org/api/source/' + String(props.source.id) + '/textdoc/download'}>
               download
             </Link>)
           </span>
-          <div style={{fontSize: '.8em', fontFamily: "'Courier Prime', Courier"}}>
-            {nl2br(props.source.textdoc)}
-          </div>
+          <pre style={{whiteSpace: 'pre-wrap', fontSize: '.8em', fontFamily: "'Courier Prime', Courier"}}>
+            {props.source.textdoc}
+          </pre>
         </Grid>
         <Grid item xs={6} md={6}>
           <strong>Media Size</strong>

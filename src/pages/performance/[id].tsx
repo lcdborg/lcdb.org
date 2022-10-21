@@ -86,10 +86,10 @@ function Performance(props: any) {
     <>
       <Head>
         <title>
-          LCDB: Performance
-          &nbsp;
+          LCDB:
+          {' '}
           {props.graphql.data.performance.artist.name}
-          &nbsp;
+          {' '}
           {performanceDate(props.graphql.data.performance)}
         </title>
       </Head>
