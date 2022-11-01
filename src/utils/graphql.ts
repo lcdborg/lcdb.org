@@ -6,8 +6,9 @@ export function graphql(
   variables: any = {},
   operationName = ''
 ) {
+
   return firstValueFrom(
-    fromFetch('https://graphql.lcdb.org/graphql', {
+    fromFetch(String(process.env.NEXT_PUBLIC_GRAPHQL_URL), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -29,7 +30,7 @@ export function graphql(
       }),
       catchError(err => {
         // Network or other error, handle appropriately
-        console.error(err);
+        console.log(err);
 
         return of({ error: true, message: err.message })
       })

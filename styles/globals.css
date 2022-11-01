@@ -69,6 +69,10 @@ code[class*='language-'] {
   display: block;
 }
 
+.creator-block {
+  display: block;
+}
+
 .year-link {
   margin-right: 1em;
 }
