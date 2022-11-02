@@ -6,14 +6,14 @@ import ListTable from "src/views/identifier/list-table";
 
 export async function getServerSideProps(context: any) {
   const query = `
-    query CreatorIdentifiers($id: Int!, $after: String = "LTE=") {
+    query CreatorIdentifiers($id: Int!, $after: String = "LTE=", $year: String = "2022") {
 
       years: identifierYears(id: $id)
 
       creator(id: $id) {
         id
         name
-        identifiers (filter: {_after: $after}) {
+        identifiers (filter: {_after: $after, year: $year, performanceDate_sort: "ASC" }) {
           pageInfo {
             hasNextPage
             hasPreviousPage
@@ -26,7 +26,6 @@ export async function getServerSideProps(context: any) {
               performanceDate
               venue
               title
-              description
             }
           }
         }
@@ -36,7 +35,7 @@ export async function getServerSideProps(context: any) {
 
   const page = Number(context.query.page) || 1;
   const id = Number(context.query.id);
-  let year = Number(context.query.year);
+  let year = String(context.query.year);
   const after = Buffer.from(String((page - 1) * 300 - 1)).toString('base64')
 
   if (! year) {
@@ -47,7 +46,7 @@ export async function getServerSideProps(context: any) {
     `;
 
     const result = await graphql(latestYearQuery, {id});
-    year = result.data.sourceLatestYear;
+    year = String(result.data.sourceLatestYear);
   }
 
   const graphqlResult = await graphql(query, {id, year, after}, 'CreatorIdentifiers');
@@ -82,6 +81,9 @@ const Years = (props: any) => {
 }
 
 function CreatorIdentifiers(props: any) {
+
+  console.log(props.graphql);
+
   return (
     <>
       <Head>
