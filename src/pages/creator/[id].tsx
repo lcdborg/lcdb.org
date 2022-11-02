@@ -39,18 +39,18 @@ export async function getServerSideProps(context: any) {
 
   const page = Number(context.query.page) || 1;
   const id = Number(context.query.id);
-  let year = String(context.query.year);
+  let year = context.query.year;
   const after = Buffer.from(String((page - 1) * 300 - 1)).toString('base64')
 
   if (! year) {
     const latestYearQuery = `
-      query IdentifierLatestYear($id: Int!) {
-        identifierLatestYear(id: $id)
+      query CreatorLatestYear($id: Int!) {
+        latestYear: creatorLatestYear(id: $id)
       }
     `;
 
     const result = await graphql(latestYearQuery, {id});
-    year = String(result.data.sourceLatestYear);
+    year = String(result.data.latestYear);
   }
 
   const graphqlResult = await graphql(query, {id, year, after}, 'CreatorIdentifiers');
@@ -88,7 +88,7 @@ const Years = (props: any) => {
 
 function CreatorIdentifiers(props: any) {
 
-  console.log(props.graphql);
+  console.log(props);
 
   return (
     <>
