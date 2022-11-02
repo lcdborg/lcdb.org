@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 export async function getServerSideProps(context: any) {
   const standardQuery = `
     query CreatorList($chr: String = "a", $after: String = "LTE=") {
-      creators (filter: { nameUnprefix_sort: "ASC", name_startswith: $chr, _after: $after }) {
+      creators (filter: { name_sort: "ASC", name_startswith: $chr, _after: $after }) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -32,7 +32,7 @@ export async function getServerSideProps(context: any) {
 
   const otherQuery = `
   query CreatorListOther($after: String = "LTE=") {
-    creators (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
+    creators (filter: { name_sort: "ASC", _after: $after }) {
       totalCount
       pageInfo {
         hasPreviousPage
@@ -51,7 +51,7 @@ export async function getServerSideProps(context: any) {
 
   const filterQuery = `
     query CreatorList($filter: String = "a", $after: String = "LTE=") {
-      creators (filter: { nameUnprefix_sort: "ASC", name_contains: $filter, _after: $after }) {
+      creators (filter: { name_sort: "ASC", name_contains: $filter, _after: $after }) {
         totalCount
         pageInfo {
           hasPreviousPage
