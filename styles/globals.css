@@ -96,3 +96,7 @@ code[class*='language-'] {
 .performance-link {
   white-space: nowrap;
 }
+
+.performance-date {
+  white-space: nowrap;
+}

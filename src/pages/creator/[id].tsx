@@ -26,6 +26,10 @@ export async function getServerSideProps(context: any) {
               performanceDate
               venue
               title
+              source {
+                id
+                comments
+              }
             }
           }
         }
@@ -54,6 +58,8 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       graphql: graphqlResult,
+      year,
+      page
     },
   }
 }
