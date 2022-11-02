@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ArchiveIdentifier from "./archive-identifier";
 
 export const Links = (props: any) => {
   const links: any[] = [];
@@ -6,15 +7,9 @@ export const Links = (props: any) => {
   props.edges.map((edge: any, key: any) => {
     if (edge.node.archiveIdentifier) {
       links.push((
-        <Link
+        <ArchiveIdentifier
           key={key + 'ai'}
-          href={{
-            pathname: 'https://archive.org/details/' + edge.node.archiveIdentifier
-          }}>
-            <a target="_blank" title={edge.node.archiveIdentifier}>
-              <i className="iconochive iconochive-logo"></i>
-            </a>
-        </Link>
+          identifier={edge.node.archiveIdentifier}></ArchiveIdentifier>
       ));
     }
 

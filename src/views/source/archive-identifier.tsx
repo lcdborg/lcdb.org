@@ -9,9 +9,9 @@ export default function ArchiveIdentifier(props: any) {
   return (
     <Link
       href={{
-      pathname: 'https://archive.org/details/' + props.identifier
+      pathname: '/identifier/' + props.identifier
     }}>
-      <a target="_blank" title={props.identifier}>
+      <a title={props.identifier}>
         <i className="iconochive iconochive-logo"></i>
       </a>
     </Link>

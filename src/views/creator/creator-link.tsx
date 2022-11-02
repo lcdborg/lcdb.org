@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-export default function ArtistLink(props: any) {
+export default function CreatorLink(props: any) {
   const artist = props.artist;
 
-  const pathname = '/artist/' + props.artist.id;
+  const pathname = '/creator/' + props.creator.id;
   let query = {};
 
   if (props.year) {
