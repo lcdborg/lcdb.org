@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { graphql } from '../../utils/graphql';
 import { PaginationControls } from '../../utils/pagination';
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
 import ListTable from 'src/views/source/list-table';
 import ArtistButton from 'src/views/components/buttons/artist';
 import ArtistGroupButton from 'src/views/components/buttons/artist-group';
@@ -105,7 +105,7 @@ const NavButtons = (props: any) => {
   if (props.graphql.data.artist.artistToArtistGroups && props.graphql.data.artist.artistToArtistGroups.edges) {
     props.graphql.data.artist.artistToArtistGroups.edges.map((edge: any, key: any) => {
       buttons.push((
-        <ArtistGroupButton artistGroup={edge.node.artistGroup} year={props.year}></ArtistGroupButton>
+        <ArtistGroupButton key={key} artistGroup={edge.node.artistGroup} year={props.year}></ArtistGroupButton>
       ));
     });
   }

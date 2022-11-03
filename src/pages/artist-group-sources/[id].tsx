@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { graphql } from '../../utils/graphql';
 import Link from 'next/link';
 import { PaginationControls} from '../../utils/pagination';
-import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
+import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { ListTable } from 'src/views/artist-group-sources/list-table';
 import ArtistGroupButton from 'src/views/components/buttons/artist-group';
 import SourcesButton from 'src/views/components/buttons/sources';
