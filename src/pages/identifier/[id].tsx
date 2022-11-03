@@ -27,13 +27,14 @@ export async function getServerSideProps(context: any) {
             node {
               id
               name
-              body
             }
           }
         }
       }
     }
   `;
+  // Including the files body causes invalid utf8 data.  Better to serve the
+  // file raw through a download.
 
   const id = context.query.id;
   const graphqlResult = await graphql(query, {id}, 'Identifier');

@@ -4,6 +4,23 @@ import nl2br from "src/utils/nl2br";
 import CreatorLink from "../creator/creator-link";
 import SourceLink from "../source/source-link";
 
+function Source(props: any) {
+  if (! props.source) {
+    return (<></>);
+  }
+
+  return (
+    <Grid item xs={12} md={12}>
+      <hr />
+      <strong>Source </strong>
+      <SourceLink source={props.source}></SourceLink>
+      <div>
+        {nl2br(props.source.comments)}
+      </div>
+    </Grid>
+  );
+}
+
 function Files(props: any) {
   if (! props.files) {
     return (<></>);
@@ -23,7 +40,6 @@ function Files(props: any) {
               </Link>)
             </span>
           </td>
-          <td><pre>{edge.node.body}</pre></td>
         </tr>
       </>
     );
@@ -35,8 +51,14 @@ function Files(props: any) {
       <table width="100%" className="table table-striped">
         <thead>
           <tr>
-            <th>File Name</th>
-            <th>Content</th>
+            <th>Files
+              {' '}
+              <span>
+                (<Link href={'https://graphql.lcdb.org/api/identifier/' + props.identifier.archiveIdentifier + '/download'}>
+                  download all files
+                </Link>)
+              </span>
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -77,25 +99,11 @@ export default function Details(props: any) {
           <hr />
           <strong>Title</strong>
 
-          {' '}
-          <span>
-            (<Link href={'https://graphql.lcdb.org/api/identifier/' + String(props.identifier.archiveIdentifier) + '/download'}>
-              download all files
-            </Link>)
-          </span>
-
           <div>
             {nl2br(props.identifier.title)}
           </div>
         </Grid>
-        <Grid item xs={12} md={12}>
-          <hr />
-          <strong>Source </strong>
-          <SourceLink source={props.identifier.source}></SourceLink>
-          <div>
-            {nl2br(props.identifier.source.comments)}
-          </div>
-        </Grid>
+        <Source source={props.identifier.source}></Source>
         <Grid item xs={12} md={12}>
           <hr />
           <strong>description</strong>
@@ -105,7 +113,7 @@ export default function Details(props: any) {
         </Grid>
       </Grid>
 
-      <Files files={props.identifier.files}></Files>
+      <Files files={props.identifier.files} identifier={props.identifier}></Files>
     </>
   )
 }
