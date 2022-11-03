@@ -4,6 +4,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import ListTable from 'src/views/performance/list-table';
+import UserIcon from 'src/layouts/components/UserIcon';
+import { FlipVertical } from 'mdi-material-ui';
+import CreatorButton from 'src/views/components/buttons/creator';
+import ArtistGroupButton from 'src/views/components/buttons/artist-group';
+import SourcesButton from 'src/views/components/buttons/sources';
 
 export async function getServerSideProps(context: any) {
   const query = `
@@ -15,6 +20,14 @@ export async function getServerSideProps(context: any) {
       artist (id: $id) {
         id
         name
+        creators {
+          edges {
+            node {
+              id
+              name
+            }
+          }
+        }
         artistToArtistGroups {
           edges {
             node {
@@ -85,27 +98,22 @@ const NavButtons = (props: any) => {
 
   if ( props.graphql.data.sourceCount) {
     buttons.push((
-      <Button
-        variant="contained"
-        key="sources"
-        href={'/sources/' + props.graphql.data.artist.id + '?year=' + props.year}
-      >
-        Sources
-      </Button>
+      <SourcesButton artist={props.graphql.data.artist} year={props.year}></SourcesButton>
     ))
   }
 
   if (props.graphql.data.artist.artistToArtistGroups && props.graphql.data.artist.artistToArtistGroups.edges) {
     props.graphql.data.artist.artistToArtistGroups.edges.map((edge: any, key: any) => {
       buttons.push((
-        <Button
-          key={key}
-          href={'/artist-group/' + edge.node.artistGroup.id + '?year=' + props.year}
-          color="warning"
-          variant="contained"
-        >
-          {edge.node.artistGroup.title} Artist Group
-        </Button>
+        <ArtistGroupButton key={key} artistGroup={edge.node.artistGroup} year={props.year}></ArtistGroupButton>
+      ));
+    });
+  }
+
+  if (props.graphql.data.artist.creators && props.graphql.data.artist.creators.edges) {
+    props.graphql.data.artist.creators.edges.map((edge: any, key: any) => {
+      buttons.push((
+        <CreatorButton key={key} creator={edge.node} year={props.year}></CreatorButton>
       ));
     });
   }
@@ -117,13 +125,14 @@ const NavButtons = (props: any) => {
       onClick={props.toggleSets}
       color="info"
       variant="contained"
+      title="Toggle Sets"
     >
-      Toggle Sets
+      <UserIcon icon={FlipVertical}></UserIcon>
     </Button>
   ));
 
   return (
-    <div className="card-title btn-group">
+    <div className="card-title">
       {buttons}
     </div>
   );

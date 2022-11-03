@@ -1,5 +1,5 @@
 import { VerticalNavItemsType } from 'src/@core/layouts/types'
-import { AccountOutline } from 'mdi-material-ui'
+import { AccountGroupOutline, AccountOutline, ArchiveOutline, MusicBoxMultipleOutline, MusicBoxOutline } from 'mdi-material-ui'
 
 const navigation = (): VerticalNavItemsType => {
   return [
@@ -13,7 +13,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Sources',
-      icon: AccountOutline,
+      icon: MusicBoxOutline,
       path: '/source-artists'
     },
     {
@@ -21,12 +21,12 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Artist Groups',
-      icon: AccountOutline,
+      icon: AccountGroupOutline,
       path: '/artist-groups'
     },
     {
       title: 'Source Artist Groups',
-      icon: AccountOutline,
+      icon: MusicBoxMultipleOutline,
       path: '/source-artist-groups'
     },
     {
@@ -34,7 +34,7 @@ const navigation = (): VerticalNavItemsType => {
     },
     {
       title: 'Creators',
-      icon: AccountOutline,
+      icon: ArchiveOutline,
       path: '/creators'
     },
   ]

@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { PaginationControls} from '../../utils/pagination';
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import { ListTable } from 'src/views/artist-group-sources/list-table';
+import ArtistGroupButton from 'src/views/components/buttons/artist-group';
+import SourcesButton from 'src/views/components/buttons/sources';
 
 export async function getServerSideProps(context: any) {
   const query = `
@@ -15,9 +17,9 @@ export async function getServerSideProps(context: any) {
         name
       }
 
-      artist: artistGroup (id: $id) {
+      artistGroup (id: $id) {
         id
-        name: title
+        title
         header
         footer
       }
@@ -100,25 +102,13 @@ const NavButtons = (props: any) => {
   const buttons: any[] = [];
 
   buttons.push((
-    <Button
-      href={'/artist-group/' + props.graphql.data.artist.id}
-      variant="contained"
-    >
-      Artist Group Performances
-    </Button>
+    <ArtistGroupButton artistGroup={props.graphql.data.artistGroup} year={props.year}></ArtistGroupButton>
   ));
 
   if (props.graphql.data.artistGroupArtists) {
     props.graphql.data.artistGroupArtists.map((node: any, key: any) => {
       buttons.push((
-        <Button
-          key={key}
-          href={'/sources/' + node.id + '?year=' + props.year}
-          variant="contained"
-          color="warning"
-        >
-          {node.name} Sources
-        </Button>
+        <SourcesButton key={key} artist={node} year={props.year}></SourcesButton>
       ));
     });
   }
@@ -138,7 +128,7 @@ const Years = (props: any) => {
       <Link
         key={key}
         href={{
-          pathname: '/artist-group-sources/' + props.graphql.data.artist.id,
+          pathname: '/artist-group-sources/' + props.graphql.data.artistGroup.id,
           query: {year}
         }}
       >
@@ -156,7 +146,7 @@ function ArtistGroupSources(props: any) {
   return (
     <>
       <Head>
-        <title>LCDB: Sources for {props.graphql.data.artist.name}</title>
+        <title>{props.graphql.data.artistGroup.title}</title>
       </Head>
 
       <Grid container spacing={6}>
@@ -164,7 +154,7 @@ function ArtistGroupSources(props: any) {
           <Card sx={{ position: 'relative' }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                Sources for Artist Group {props.graphql.data.artist.name}
+                Sources for Artist Group {props.graphql.data.artistGroup.title}
               </Typography>
 
               <NavButtons year={props.year} graphql={props.graphql}></NavButtons>
@@ -173,7 +163,7 @@ function ArtistGroupSources(props: any) {
               <PaginationControls
                 graphql={props.graphql.data.sources}
                 page={props.page}
-                pathname={'/artist-group-sources/' + props.graphql.data.artist.id}
+                pathname={'/artist-group-sources/' + props.graphql.data.artistGroup.id}
                 baseQuery={{year: props.year}}>
               </PaginationControls>
 

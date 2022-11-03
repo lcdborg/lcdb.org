@@ -3,6 +3,10 @@ import { graphql } from '../../utils/graphql';
 import React, { useState } from 'react';
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import PerformanceListTable from 'src/views/aritst-group/performance-list-table';
+import SourceArtistGroupButton from 'src/views/components/buttons/source-artist-group';
+import ArtistButton from 'src/views/components/buttons/artist';
+import UserIcon from 'src/layouts/components/UserIcon';
+import { FlipVertical } from 'mdi-material-ui';
 
 export async function getServerSideProps(context: any) {
   const query = `
@@ -16,9 +20,9 @@ export async function getServerSideProps(context: any) {
       name
     }
 
-    artist: artistGroup (id: $id) {
+    artistGroup (id: $id) {
       id
-      name: title
+      title
     }
 
     performances (filter: {year: $year date_sort: "ASC"}) {
@@ -84,27 +88,14 @@ const NavButtons = (props: any) => {
 
   if ( props.graphql.data.sourceCount) {
     buttons.push((
-      <Button
-          variant="contained"
-          key="sources"
-          href={'/artist-group-sources/' + props.graphql.data.artist.id + '?year=' + props.year}
-        >
-          Artist Group Sources
-      </Button>
+      <SourceArtistGroupButton artistGroup={props.graphql.data.artistGroup} year={props.year}></SourceArtistGroupButton>
     ))
   }
 
   if (props.graphql.data.artistGroupArtists) {
     props.graphql.data.artistGroupArtists.map((edge: any, key: any) => {
       buttons.push((
-        <Button
-          variant="contained"
-          key={key}
-          href={'/artist/' + edge.id + '?year=' + props.year}
-          color="warning"
-        >
-          {edge.name}
-        </Button>
+        <ArtistButton key={key} artist={edge} year={props.year}></ArtistButton>
       ));
     });
   }
@@ -117,7 +108,7 @@ const NavButtons = (props: any) => {
       onClick={props.toggleSets}
       color="info"
     >
-      Toggle Sets
+      <UserIcon icon={FlipVertical}></UserIcon>
     </Button>
   ));
 
@@ -135,7 +126,7 @@ const Years = (props: any) => {
     years.push((
       <a
         key={key}
-        href={"/artist-group/" + props.graphql.data.artist.id + "?year=" + year}
+        href={"/artist-group/" + props.graphql.data.artistGroup.id + "?year=" + year}
         className="year-link"
       >
         {(year === 1939) ? 'unknown' : year}
@@ -160,7 +151,7 @@ export function ArtistGroup(props: any) {
   return (
     <>
       <Head>
-        <title>LCDB: Artist Group Performances for {props.graphql.data.artist.name}</title>
+        <title>{props.graphql.data.artistGroup.title}</title>
       </Head>
 
       <Grid container spacing={6}>
@@ -168,7 +159,7 @@ export function ArtistGroup(props: any) {
           <Card sx={{ position: 'relative' }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                Artist Group Performances for {props.graphql.data.artist.name}
+                Artist Group Performances for {props.graphql.data.artistGroup.title}
               </Typography>
 
               <NavButtons toggleSets={toggleSets} year={props.year} graphql={props.graphql}></NavButtons>

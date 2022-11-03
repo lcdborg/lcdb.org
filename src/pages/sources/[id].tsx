@@ -3,6 +3,8 @@ import { graphql } from '../../utils/graphql';
 import { PaginationControls } from '../../utils/pagination';
 import { Button, Card, CardContent, Grid, Typography } from '@mui/material';
 import ListTable from 'src/views/source/list-table';
+import ArtistButton from 'src/views/components/buttons/artist';
+import ArtistGroupButton from 'src/views/components/buttons/artist-group';
 
 export async function getServerSideProps(context: any) {
   const query = `
@@ -97,23 +99,13 @@ const NavButtons = (props: any) => {
   const buttons: any[] = [];
 
   buttons.push((
-    <Button variant='contained' href={'/artist/' + props.graphql.data.artist.id}
-    >
-      Performances
-    </Button>
+    <ArtistButton artist={props.graphql.data.artist} year={props.year}></ArtistButton>
   ));
 
   if (props.graphql.data.artist.artistToArtistGroups && props.graphql.data.artist.artistToArtistGroups.edges) {
     props.graphql.data.artist.artistToArtistGroups.edges.map((edge: any, key: any) => {
       buttons.push((
-        <Button
-          variant='contained'
-          key={key}
-          href={'/artist-group/' + edge.node.artistGroup.id + '?year=' + props.year}
-          color="warning"
-        >
-          {edge.node.artistGroup.title} Artist Group
-        </Button>
+        <ArtistGroupButton artistGroup={edge.node.artistGroup} year={props.year}></ArtistGroupButton>
       ));
     });
   }
