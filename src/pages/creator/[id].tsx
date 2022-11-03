@@ -8,7 +8,7 @@ export async function getServerSideProps(context: any) {
   const query = `
     query CreatorIdentifiers($id: Int!, $after: String = "LTE=", $year: String = "2022") {
 
-      years: identifierYears(id: $id)
+      years: creatorYears(id: $id)
 
       creator(id: $id) {
         id
@@ -87,9 +87,6 @@ const Years = (props: any) => {
 }
 
 function CreatorIdentifiers(props: any) {
-
-  console.log(props);
-
   return (
     <>
       <Head>
