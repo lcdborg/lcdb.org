@@ -35,7 +35,7 @@ function Files(props: any) {
             {edge.node.name}
             {' '}
             <span>
-              (<Link href={'https://graphql.lcdb.org/api/file/' + String(edge.node.id) + '/download'}>
+              (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/file/' + String(edge.node.id) + '/download'}>
                 download
               </Link>)
             </span>
@@ -54,7 +54,7 @@ function Files(props: any) {
             <th>Files
               {' '}
               <span>
-                (<Link href={'https://graphql.lcdb.org/api/identifier/' + props.identifier.archiveIdentifier + '/download'}>
+                (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/identifier/' + props.identifier.archiveIdentifier + '/download'}>
                   download all files
                 </Link>)
               </span>

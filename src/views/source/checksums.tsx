@@ -13,7 +13,7 @@ export default function Checksums(props: any) {
         <strong>{edge.node.description}</strong>
         {' '}
         <span>
-          (<Link href={'https://graphql.lcdb.org/api/checksum/' + String(edge.node.id) + '/download'}>
+          (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/checksum/' + String(edge.node.id) + '/download'}>
             download
           </Link>)
         </span>

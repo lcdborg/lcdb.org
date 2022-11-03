@@ -31,7 +31,7 @@ export default function Details(props: any) {
           <strong>Summary</strong>
           &nbsp;
           <span>
-            (<Link href={'https://graphql.lcdb.org/api/source/' + String(props.source.id) + '/download'}>
+            (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/source/' + String(props.source.id) + '/download'}>
               download all files
             </Link>)
           </span>
@@ -44,7 +44,7 @@ export default function Details(props: any) {
           <strong>Textdoc</strong>
           {' '}
           <span>
-            (<Link href={'https://graphql.lcdb.org/api/source/' + String(props.source.id) + '/textdoc/download'}>
+            (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/source/' + String(props.source.id) + '/textdoc/download'}>
               download
             </Link>)
           </span>
