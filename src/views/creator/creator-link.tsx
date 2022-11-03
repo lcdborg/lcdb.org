@@ -1,8 +1,6 @@
 import Link from "next/link";
 
 export default function CreatorLink(props: any) {
-  const artist = props.artist;
-
   const pathname = '/creator/' + props.creator.id;
   let query = {};
 
@@ -14,7 +12,7 @@ export default function CreatorLink(props: any) {
     <Link
       href={{pathname, query}}
     >
-      {artist.name}
+      {props.creator.name}
     </Link>
   );
 }
