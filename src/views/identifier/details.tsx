@@ -70,8 +70,6 @@ export default function Details(props: any) {
             width={400}
             height={180}
             frameBorder={0}
-            webkitallowfullscreen={true}
-            mozallowfullscreen={true}
             allowFullScreen={true}></iframe>
         </Grid>
 
