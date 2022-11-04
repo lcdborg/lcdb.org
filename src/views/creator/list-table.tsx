@@ -16,7 +16,7 @@ export default function ListTable(props: any) {
 
   return (
     <Grid container>
-      <Grid item xs={4} md={4}>
+      <Grid item xs={12} md={4}>
         <ul>
         {
           graphql.data.creators.edges.slice(
@@ -29,7 +29,7 @@ export default function ListTable(props: any) {
         }
         </ul>
       </Grid>
-      <Grid item xs={4} md={4}>
+      <Grid item xs={12} md={4}>
         <ul>
         {
           graphql.data.creators.edges.slice(
@@ -43,7 +43,7 @@ export default function ListTable(props: any) {
         }
         </ul>
       </Grid>
-      <Grid item xs={4} md={4}>
+      <Grid item xs={12} md={4}>
         <ul>
         {
           graphql.data.creators.edges.slice(
