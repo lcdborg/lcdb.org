@@ -11,8 +11,8 @@ import ListTable from "src/views/artist/list-table";
 
 export async function getServerSideProps(context: any) {
   const standardQuery = `
-    query SourceArtists($chr: String = "a", $after: String = "LTE=") {
-      artists (filter: { nameUnprefix_sort: "ASC", name_startswith: $chr, _after: $after }) {
+    query ArtistsUnprefixSource($chr: String = "a", $after: String = "LTE=") {
+      artists: artistsUnprefixSource (filter: { nameUnprefix_sort: "ASC", name_startswith: $chr, _after: $after }) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -30,8 +30,8 @@ export async function getServerSideProps(context: any) {
   `;
 
   const otherQuery = `
-    query SourceArtistsOther($after: String = "LTE=") {
-      artists (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
+    query ArtistsUnprefixSourceOther($after: String = "LTE=") {
+      artists: artistsUnprefixSource (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -49,8 +49,8 @@ export async function getServerSideProps(context: any) {
   `;
 
   const filterQuery = `
-    query SourceArtists($filter: String = "a", $after: String = "LTE=") {
-      artists (filter: { nameUnprefix_sort: "ASC", name_contains: $filter, _after: $after }) {
+    query ArtistsUnprefixSource($filter: String = "a", $after: String = "LTE=") {
+      artists: artistsUnprefixSource (filter: { nameUnprefix_sort: "ASC", name_contains: $filter, _after: $after }) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -68,7 +68,7 @@ export async function getServerSideProps(context: any) {
   `;
 
   let query = standardQuery;
-  let operationName = 'SourceArtists';
+  let operationName = 'ArtistsUnprefixSource';
   const chr = context.query.chr ? context.query.chr : 'top100';
   const page = context.query.page ? Number(context.query.page) : 1;
   const filter = context.query.filter ? context.query.filter : '';
@@ -76,7 +76,7 @@ export async function getServerSideProps(context: any) {
   switch (chr) {
     case 'other':
       query = otherQuery;
-      operationName = 'SourceArtistsOther';
+      operationName = 'ArtistsUnprefixSourceOther';
       break;
     default:
       break;
@@ -84,7 +84,7 @@ export async function getServerSideProps(context: any) {
 
   if (filter) {
     query = filterQuery;
-    operationName = 'SourceArtists';
+    operationName = 'ArtistsUnprefixSource';
   }
 
   const variables = {
@@ -134,14 +134,18 @@ function SourceArtists(props: any) {
 
               <div>
                 {alphabet(true).map((chr, key) => (
-                  <Link
-                    href={{
-                      pathname: 'source-artists',
-                      query: {chr}
-                    }}
-                    key={key}
-                  ><a className="alphabet">{chr}</a></Link>
+                  <>
+                    <Link
+                      href={{
+                        pathname: 'source-artists',
+                        query: {chr}
+                      }}
+                      key={key}
+                    ><a className="alphabet">{chr}</a></Link>
+                    {' '}
+                  </>
                 ))}
+                {' '}
 
                 <Link
                   href={{
