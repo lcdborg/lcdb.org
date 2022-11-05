@@ -26,8 +26,6 @@ export default function ListTable(props: any) {
     rows.push((
       <>
       <tr key={key + "a"}>
-        <td className="performance-date">{edge.node.performanceDate}</td>
-        <td>{edge.node.venue}</td>
         <td>
           <Link
             href={{
@@ -39,8 +37,10 @@ export default function ListTable(props: any) {
             </a>
           </Link>
         </td>
+        <td className="performance-date">{edge.node.performanceDate}</td>
+        <td>{edge.node.venue}</td>
       </tr>
-      <SourceComment source={edge.node.source}></SourceComment>
+      <SourceComment key={key + "b"} source={edge.node.source}></SourceComment>
       </>
     ));
   });
@@ -49,9 +49,9 @@ export default function ListTable(props: any) {
     <table width="100%" className="table table-double-striped">
       <thead>
         <tr>
+          <th>Archive Identifier</th>
           <th>Date</th>
           <th>Venue</th>
-          <th>Archive Identifier</th>
         </tr>
       </thead>
       <tbody>

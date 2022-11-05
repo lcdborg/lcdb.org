@@ -22,26 +22,24 @@ function Source(props: any) {
 }
 
 function Files(props: any) {
-  if (! props.files) {
+  if (! props.files || ! props.files.edges.length) {
     return (<></>);
   }
 
   const rows: any = [];
   props.files.edges.map((edge: any, key: any) => {
     rows.push(
-      <>
-        <tr key={key}>
-          <td>
-            {edge.node.name}
-            {' '}
-            <span>
-              (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/file/' + String(edge.node.id) + '/download'}>
-                download
-              </Link>)
-            </span>
-          </td>
-        </tr>
-      </>
+      <tr key={key}>
+        <td>
+          {edge.node.name}
+          {' '}
+          <span>
+            (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/file/' + String(edge.node.id) + '/download'}>
+              download
+            </Link>)
+          </span>
+        </td>
+      </tr>
     );
   });
 
@@ -74,7 +72,7 @@ export default function Details(props: any) {
     <>
       <Typography gutterBottom variant="h5" component="div">
         <CreatorLink creator={props.identifier.creator} year={props.identifier.year}></CreatorLink>
-        &nbsp;
+        {' '}
         {props.identifier.archiveIdentifier}
       </Typography>
 
