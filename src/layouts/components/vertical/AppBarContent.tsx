@@ -1,10 +1,10 @@
 // ** MUI Imports
 import Box from '@mui/material/Box'
 import { Theme } from '@mui/material/styles'
-import TextField from '@mui/material/TextField'
 import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
-import InputAdornment from '@mui/material/InputAdornment'
+import { styled } from '@mui/material/styles'
+import Typography, { TypographyProps } from '@mui/material/Typography'
 
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
@@ -12,6 +12,7 @@ import Magnify from 'mdi-material-ui/Magnify'
 
 // ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
+import { TypographyProps } from '@mui/material'
 
 interface Props {
   hidden: boolean
@@ -27,6 +28,14 @@ const AppBarContent = (props: Props) => {
   // ** Hook
   const hiddenSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'))
 
+  const HeaderTitle = styled(Typography)<TypographyProps>(({ theme }) => ({
+    fontWeight: 600,
+    lineHeight: 'normal',
+    textTransform: 'uppercase',
+    color: theme.palette.text.primary,
+    transition: 'opacity .25s ease-in-out, margin .25s ease-in-out'
+  }))
+
   return (
     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <Box className='actions-left' sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
@@ -36,9 +45,13 @@ const AppBarContent = (props: Props) => {
             onClick={toggleNavVisibility}
             sx={{ ml: -2.75, ...(hiddenSm ? {} : { mr: 3.5 }) }}
           >
-            <Menu />
+            <img src="/images/logo.svg" alt="logo" width="30px"/>
+            <HeaderTitle variant='h6' sx={{ ml: 3 }}>
+              Live Concert Database
+            </HeaderTitle>
           </IconButton>
         ) : null}
+        {/**
         <TextField
           size='small'
           sx={{ '& .MuiOutlinedInput-root': { borderRadius: 4 } }}
@@ -50,6 +63,7 @@ const AppBarContent = (props: Props) => {
             )
           }}
         />
+         */}
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
 {/*
