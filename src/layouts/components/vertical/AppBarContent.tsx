@@ -6,13 +6,14 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled } from '@mui/material/styles'
 import Typography, { TypographyProps } from '@mui/material/Typography'
 
+/**
 // ** Icons Imports
 import Menu from 'mdi-material-ui/Menu'
 import Magnify from 'mdi-material-ui/Magnify'
+*/
 
 // ** Type Import
 import { Settings } from 'src/@core/context/settingsContext'
-import { TypographyProps } from '@mui/material'
 
 interface Props {
   hidden: boolean
