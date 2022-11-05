@@ -31,22 +31,22 @@ export async function getServerSideProps(context: any) {
   `;
 
   const otherQuery = `
-  query CreatorUnprefixListOther($after: String = "LTE=") {
-    creators: creatorsUnprefix (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
-      totalCount
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          name
+    query CreatorUnprefixListOther($after: String = "LTE=") {
+      creators: creatorsUnprefix (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
+        totalCount
+        pageInfo {
+          hasPreviousPage
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+          }
         }
       }
     }
-  }
   `;
 
   const filterQuery = `
@@ -134,13 +134,16 @@ function Creators(props: any) {
 
               <div>
                 {alphabet(true).map((chr, key) => (
-                  <Link
-                    href={{
-                      pathname: 'creators',
-                      query: {chr}
-                    }}
-                    key={key}
-                  ><a className="alphabet">{chr}</a></Link>
+                  <>
+                    <Link
+                      href={{
+                        pathname: 'creators',
+                        query: {chr}
+                      }}
+                      key={key}
+                    ><a className="alphabet">{chr}</a></Link>
+                    {' '}
+                  </>
                 ))}
 
                 <Link

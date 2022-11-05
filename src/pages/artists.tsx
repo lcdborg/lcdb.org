@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 export async function getServerSideProps(context: any) {
   const standardQuery = `
     query ArtistList($chr: String = "a", $after: String = "LTE=") {
-      artists (filter: { nameUnprefix_sort: "ASC", name_startswith: $chr, _after: $after }) {
+      artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", nameUnprefix_startswith: $chr, _after: $after }) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -32,7 +32,7 @@ export async function getServerSideProps(context: any) {
 
   const top100query = `
   {
-    artists (filter: { nameUnprefix_sort: "ASC", top100: true }) {
+    artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", top100: true }) {
       totalCount
       pageInfo {
         hasPreviousPage
@@ -50,27 +50,27 @@ export async function getServerSideProps(context: any) {
   `;
 
   const otherQuery = `
-  query ArtistListOther($after: String = "LTE=") {
-    artists (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
-      totalCount
-      pageInfo {
-        hasPreviousPage
-        hasNextPage
-      }
-      edges {
-        cursor
-        node {
-          id
-          name
+    query ArtistUnprefixListOther($after: String = "LTE=") {
+      artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
+        totalCount
+        pageInfo {
+          hasPreviousPage
+          hasNextPage
+        }
+        edges {
+          cursor
+          node {
+            id
+            name
+          }
         }
       }
     }
-  }
   `;
 
   const filterQuery = `
     query ArtistList($filter: String = "a", $after: String = "LTE=") {
-      artists (filter: { nameUnprefix_sort: "ASC", name_contains: $filter, _after: $after }) {
+      artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", name_contains: $filter, _after: $after }) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -99,7 +99,7 @@ export async function getServerSideProps(context: any) {
       break;
     case 'other':
       query = otherQuery;
-      operationName = 'ArtistListOther';
+      operationName = 'ArtistUnprefixListOther';
       break;
     default:
       break;
@@ -161,15 +161,18 @@ function Artists(props: any) {
                     query: {chr: 'top100'}
                   }}
                 ><a className="alphabet">top 100</a></Link>
-
+                {' '}
                 {alphabet(true).map((chr, key) => (
-                  <Link
-                    href={{
-                      pathname: 'artists',
-                      query: {chr}
-                    }}
-                    key={key}
-                  ><a className="alphabet">{chr}</a></Link>
+                  <>
+                    <Link
+                      href={{
+                        pathname: 'artists',
+                        query: {chr}
+                      }}
+                      key={key}
+                    ><a className="alphabet">{chr}</a></Link>
+                    {' '}
+                  </>
                 ))}
 
                 <Link
