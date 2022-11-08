@@ -51,9 +51,14 @@ export default function ListTable(props: any) {
     <table width="100%" className="table table-triple-striped">
       <thead>
         <tr>
-          <th>Archive Identifier</th>
+          <th colSpan={2}>Archive Identifier</th>
+        </tr>
+        <tr>
           <th>Date</th>
           <th>Venue</th>
+        </tr>
+        <tr>
+          <th colSpan={2}>Source</th>
         </tr>
       </thead>
       <tbody>
