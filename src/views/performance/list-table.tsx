@@ -7,17 +7,22 @@ export default function ListTable(props: any) {
 
   props.graphql.data.artist.performances.edges.map((edge: any, key: any) => {
     rows.push((
-      <tr key={key + "1"}>
-        <td>
-          <PerformanceLink performance={edge.node}></PerformanceLink>
-        </td>
-        <td>{edge.node.venue}</td>
-        <td>{edge.node.city}</td>
-        <td>{edge.node.state}</td>
-        <td>
-          <SourceLinks edges={edge.node.sources.edges}></SourceLinks>
-        </td>
-      </tr>
+      <>
+        <tr key={key + "a"}>
+          <td>
+            <PerformanceLink performance={edge.node}></PerformanceLink>
+          </td>
+          <td>{edge.node.venue}</td>
+          <td>{edge.node.city}</td>
+          <td>{edge.node.state}</td>
+        </tr>
+        <tr key={key + "b"}>
+          <td></td>
+          <td colSpan={3}>
+            <SourceLinks edges={edge.node.sources.edges}></SourceLinks>
+          </td>
+        </tr>
+      </>
     ));
 
     if (props.showSets) {
@@ -56,7 +61,10 @@ export default function ListTable(props: any) {
           <th>Venue</th>
           <th>City</th>
           <th>State</th>
-          <th>Sources</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th colSpan={3}>Sources</th>
         </tr>
       </thead>
       <tbody>

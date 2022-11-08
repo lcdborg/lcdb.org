@@ -44,17 +44,6 @@ function getPages(page: number, totalCount: number): number[] {
   return pages;
 }
 
-export function alphabet(caps = false): string[] {
-  const alphabet: string[] = [];
-  const offset = (caps) ? 65 : 97;
-
-  for (let i = 0; i < 26; i++) {
-    alphabet.push(String.fromCharCode(i + offset));
-  }
-
-  return alphabet;
-}
-
 export function PaginationControls(props: any) {
   if (! props.graphql || (
     ! props.graphql.pageInfo.hasNextPage

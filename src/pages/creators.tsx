@@ -2,13 +2,13 @@ import Head from 'next/head'
 import Link from 'next/link';
 import React from 'react';
 import { graphql } from '../utils/graphql';
-import { alphabet } from '../utils/pagination';
 import { PaginationControls} from '../utils/pagination';
 import { Buffer } from 'node:buffer';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import ListTable from 'src/views/creator/list-table';
 import FromTo from 'src/views/creator/from-to';
 import { useRouter } from 'next/router';
+import AlphabetLinks from 'src/views/components/alphabet-links';
 
 export async function getServerSideProps(context: any) {
   const standardQuery = `
@@ -133,18 +133,7 @@ function Creators(props: any) {
               </Typography>
 
               <div>
-                {alphabet(true).map((chr, key) => (
-                  <>
-                    <Link
-                      href={{
-                        pathname: 'creators',
-                        query: {chr}
-                      }}
-                      key={key}
-                    ><a className="alphabet">{chr}</a></Link>
-                    {' '}
-                  </>
-                ))}
+                <AlphabetLinks pathname='creators'></AlphabetLinks>
 
                 <Link
                   href={{

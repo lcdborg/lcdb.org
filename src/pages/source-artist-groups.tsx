@@ -2,12 +2,13 @@ import Head from "next/head";
 import Link from "next/link";
 import React from "react";
 import { graphql } from "../utils/graphql";
-import { alphabet, PaginationControls } from '../utils/pagination';
+import { PaginationControls } from '../utils/pagination';
 import { Buffer } from 'node:buffer';
 import { useRouter } from "next/router";
 import FromTo from "src/views/artist/from-to";
 import ListTable from "src/views/artist/list-table";
 import { Card, CardContent, Grid, Typography } from "@mui/material";
+import AlphabetLinks from "src/views/components/alphabet-links";
 
 export async function getServerSideProps(context: any) {
   const standardQuery = `
@@ -135,15 +136,7 @@ function SourceArtistGroups(props: any) {
               </Typography>
 
               <div>
-                {alphabet(true).map((chr, key) => (
-                  <Link
-                    href={{
-                      pathname: 'source-artist-groups',
-                      query: {chr}
-                    }}
-                    key={key}
-                  ><a className="alphabet">{chr}</a></Link>
-                ))}
+                <AlphabetLinks pathname='source-artist-groups'></AlphabetLinks>
 
                 <Link
                   href={{

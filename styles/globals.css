@@ -94,6 +94,12 @@ code[class*='language-'] {
   background: #f9f9f9;
 }
 
+.table-triple-striped tr:nth-child(6n+1),
+.table-triple-striped tr:nth-child(6n+2),
+.table-triple-striped tr:nth-child(6n+3) {
+  background: #f9f9f9;
+}
+
 .performance-link {
   white-space: nowrap;
 }

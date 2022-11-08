@@ -8,13 +8,13 @@ function SourceComment(props: any) {
 
   return (
     <>
-    <tr>
-      <td>
-        <SourceLink source={props.source}></SourceLink>
-      </td>
-    <td colSpan={2}
+      <tr key={props.key}>
+        <td>
+          <SourceLink source={props.source}></SourceLink>
+        </td>
+        <td style={{wordBreak: 'break-word'}}
           dangerouslySetInnerHTML={{ __html: props.source.comments}} />
-    </tr>
+      </tr>
     </>
   )
 }
@@ -26,7 +26,7 @@ export default function ListTable(props: any) {
     rows.push((
       <>
       <tr key={key + "a"}>
-        <td>
+        <td colSpan={2} style={{wordBreak: 'break-all'}}>
           <Link
             href={{
               pathname: '/identifier/' + edge.node.archiveIdentifier
@@ -37,16 +37,18 @@ export default function ListTable(props: any) {
             </a>
           </Link>
         </td>
+      </tr>
+      <tr key={key + "b"}>
         <td className="performance-date">{edge.node.performanceDate}</td>
         <td>{edge.node.venue}</td>
       </tr>
-      <SourceComment key={key + "b"} source={edge.node.source}></SourceComment>
+      <SourceComment key={key + "c"} source={edge.node.source}></SourceComment>
       </>
     ));
   });
 
   return (
-    <table width="100%" className="table table-double-striped">
+    <table width="100%" className="table table-triple-striped">
       <thead>
         <tr>
           <th>Archive Identifier</th>
