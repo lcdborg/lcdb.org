@@ -12,7 +12,7 @@ function SourceComment(props: any) {
         <td>
           <SourceLink source={props.source}></SourceLink>
         </td>
-        <td style={{wordBreak: 'break-word'}}
+        <td style={{wordBreak: 'break-all'}}
           dangerouslySetInnerHTML={{ __html: props.source.comments}} />
       </tr>
     </>
