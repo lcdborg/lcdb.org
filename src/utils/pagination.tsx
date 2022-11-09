@@ -1,4 +1,4 @@
-import { Play, SkipBackward, SkipForward, SkipNext, SkipPrevious } from 'mdi-material-ui';
+import { SkipBackward, SkipForward, SkipNext, SkipPrevious } from 'mdi-material-ui';
 import Link from 'next/link';
 import UserIcon from 'src/layouts/components/UserIcon';
 
