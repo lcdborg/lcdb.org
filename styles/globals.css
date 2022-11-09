@@ -75,11 +75,11 @@ code[class*='language-'] {
 }
 
 .year-link {
-  margin-right: 1em;
+
 }
 
 .year-link:after {
-  content: ' ';
+
 }
 
 .year-link-active {

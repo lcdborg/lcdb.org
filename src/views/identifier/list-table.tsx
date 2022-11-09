@@ -3,19 +3,17 @@ import SourceLink from "../source/source-link";
 
 function SourceComment(props: any) {
   if (! props.source) {
-    return (<><tr></tr></>);
+    return (<tr />);
   }
 
   return (
-    <>
-      <tr key={props.key}>
-        <td>
-          <SourceLink source={props.source}></SourceLink>
-        </td>
-        <td style={{wordBreak: 'break-all'}}
-          dangerouslySetInnerHTML={{ __html: props.source.comments}} />
-      </tr>
-    </>
+    <tr key={props.key}>
+      <td>
+        <SourceLink source={props.source}></SourceLink>
+      </td>
+      <td
+        dangerouslySetInnerHTML={{ __html: props.source.comments}} />
+    </tr>
   )
 }
 
@@ -48,7 +46,7 @@ export default function ListTable(props: any) {
   });
 
   return (
-    <table width="100%" className="table table-triple-striped">
+    <table width="100%" className="table-triple-striped">
       <thead>
         <tr>
           <th colSpan={2}>Archive Identifier</th>

@@ -1,4 +1,6 @@
+import { Play, SkipBackward, SkipForward, SkipNext, SkipPrevious } from 'mdi-material-ui';
 import Link from 'next/link';
+import UserIcon from 'src/layouts/components/UserIcon';
 
 function getMaxPage(totalCount: number): number {
   return Math.ceil(totalCount / 300);
@@ -58,7 +60,7 @@ export function PaginationControls(props: any) {
   controls.push((
     <Link href={{pathname, query: {page: 1, ...props.baseQuery}}}>
       <a className="pagination-link">
-        |&lt; FIRST
+        <UserIcon icon={SkipBackward}></UserIcon>
       </a>
     </Link>
   ));
@@ -67,7 +69,7 @@ export function PaginationControls(props: any) {
     controls.push((
       <Link href={{pathname, query: {page: props.page - 1, ...props.baseQuery}}}>
         <a className="pagination-link">
-          &lt; PREV
+          <UserIcon icon={SkipPrevious}></UserIcon>
         </a>
       </Link>
     ));
@@ -87,7 +89,7 @@ export function PaginationControls(props: any) {
     controls.push((
       <Link href={{pathname, query: {page: props.page + 1, ...props.baseQuery}}}>
         <a className="pagination-link">
-          NEXT &gt;
+          <UserIcon icon={SkipNext}></UserIcon>
         </a>
       </Link>
     ));
@@ -96,7 +98,7 @@ export function PaginationControls(props: any) {
   controls.push((
     <Link href={{pathname, query: {page: getMaxPage(props.graphql.totalCount), ...props.baseQuery}}}>
       <a className="pagination-link">
-        LAST |&gt;
+        <UserIcon icon={SkipForward}></UserIcon>
       </a>
     </Link>
   ));
