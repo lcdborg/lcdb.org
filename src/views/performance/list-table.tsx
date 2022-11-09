@@ -54,7 +54,7 @@ export default function ListTable(props: any) {
   });
 
   return (
-    <table className="table table-striped" width="100%">
+    <table className="table table-double-striped" width="100%">
       <thead>
         <tr>
           <th>Date</th>

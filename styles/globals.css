@@ -86,18 +86,23 @@ code[class*='language-'] {
   text-decoration: underline;
 }
 
-.source-link {
-  padding-right: 1em;
-}
-
 .table-double-striped tr:nth-child(4n+1), .table-double-striped tr:nth-child(4n+2) {
-  background: #f9f9f9;
+  background: #efe1d4;
 }
 
 .table-triple-striped tr:nth-child(6n+1),
 .table-triple-striped tr:nth-child(6n+2),
 .table-triple-striped tr:nth-child(6n+3) {
-  background: #f9f9f9;
+  background: #efe1d4;
+}
+
+th {
+  background: #ffffff;
+  word-break: 'break-all';
+}
+
+tr, td {
+  word-break: 'break-all';
 }
 
 .performance-link {
