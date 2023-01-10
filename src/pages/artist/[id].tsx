@@ -143,6 +143,7 @@ const Years = (props: any) => {
 
   props.graphql.data.years.map((year: any, key: any) => {
     years.push((
+      <>
       <Link
         key={key}
         href={{
@@ -156,6 +157,8 @@ const Years = (props: any) => {
         {(year === 1939) ? 'unknown' : year}
       </a>
       </Link>
+      {' '}
+      </>
     ));
   });
 
