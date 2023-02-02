@@ -13,7 +13,12 @@ import AlphabetLinks from "src/views/components/alphabet-links";
 export async function getServerSideProps(context: any) {
   const standardQuery = `
     query SourceArtistGroups($chr: String = "a", $after: String = "LTE=") {
-      artists: artistGroups (filter: { title_sort: "ASC", title_startswith: $chr, _after: $after }) {
+      artists: artistGroups (
+        filter: {
+          title: { sort: "ASC", startswith: $chr }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -32,7 +37,12 @@ export async function getServerSideProps(context: any) {
 
   const otherQuery = `
     query SourceArtistGroupsOther($after: String = "LTE=") {
-      artists: artistGroups (filter: { title_sort: "ASC", _after: $after }) {
+      artists: artistGroups (
+        filter: {
+          title: { sort: "ASC" }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -51,7 +61,12 @@ export async function getServerSideProps(context: any) {
 
   const filterQuery = `
     query SourceArtistGroups($filter: String = "a", $after: String = "LTE=") {
-      artists: artistGroups (filter: { title_sort: "ASC", title_contains: $filter, _after: $after }) {
+      artists: artistGroups (
+        filter: {
+          title: { sort: "ASC", contains: $filter }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage

@@ -13,7 +13,12 @@ import AlphabetLinks from 'src/views/components/alphabet-links';
 export async function getServerSideProps(context: any) {
   const standardQuery = `
     query CreatorUnprefixList($chr: String = "a", $after: String = "LTE=") {
-      creators: creatorsUnprefix (filter: { nameUnprefix_sort: "ASC", nameUnprefix_startswith: $chr, _after: $after }) {
+      creators: creatorsUnprefix (
+        filter: {
+          nameUnprefix: { sort: "ASC", startswith: $chr }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -32,7 +37,12 @@ export async function getServerSideProps(context: any) {
 
   const otherQuery = `
     query CreatorUnprefixListOther($after: String = "LTE=") {
-      creators: creatorsUnprefix (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
+      creators: creatorsUnprefix (
+        filter: {
+          nameUnprefix: { sort: "ASC" }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -51,7 +61,13 @@ export async function getServerSideProps(context: any) {
 
   const filterQuery = `
     query CreatorUnprefixList($filter: String = "a", $after: String = "LTE=") {
-      creators: creatorsUnprefix (filter: { nameUnprefix_sort: "ASC", name_contains: $filter, _after: $after }) {
+      creators: creatorsUnprefix (
+        filter: {
+          nameUnprefix: { sort: "ASC" }
+          name: { contains: $filter }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -140,6 +156,7 @@ function Creators(props: any) {
                     pathname: 'creators',
                     query: {chr: 'other'}
                   }}
+                  key="other"
                 ><a className="alphabet">other</a></Link>
 
                 <br />

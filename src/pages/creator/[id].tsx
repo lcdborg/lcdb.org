@@ -18,7 +18,13 @@ export async function getServerSideProps(context: any) {
           id
           name
         }
-        identifiers (filter: {_after: $after, year: $year, performanceDate_sort: "ASC" }) {
+        identifiers (
+          filter: {
+            year: { eq: $year }
+            performanceDate: { sort: "ASC" }
+          }
+          pagination: { after: $after }
+        ) {
           pageInfo {
             hasNextPage
             hasPreviousPage

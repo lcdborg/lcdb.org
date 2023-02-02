@@ -38,7 +38,12 @@ export async function getServerSideProps(context: any) {
             }
           }
         }
-        performances (filter: {year: $year date_sort: "ASC"}) {
+        performances (
+          filter: {
+            year: { eq: $year }
+            date: { sort: "ASC"}
+          }
+        ) {
           totalCount
           edges {
             node {
