@@ -24,7 +24,9 @@ export async function getServerSideProps(context: any) {
         footer
       }
 
-      sources (filter: {_after: $after}) {
+      sources (
+        pagination: { after: $after }
+      ) {
         pageInfo {
           hasNextPage
           hasPreviousPage

@@ -13,7 +13,12 @@ import AlphabetLinks from 'src/views/components/alphabet-links';
 export async function getServerSideProps(context: any) {
   const standardQuery = `
     query ArtistList($chr: String = "a", $after: String = "LTE=") {
-      artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", nameUnprefix_startswith: $chr, _after: $after }) {
+      artists: artistsUnprefix (
+        filter: {
+          nameUnprefix: { sort: "ASC", startswith: $chr }
+        }
+        pagination: { after: $after}
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -32,7 +37,12 @@ export async function getServerSideProps(context: any) {
 
   const top100query = `
   {
-    artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", top100: true }) {
+    artists: artistsUnprefix (
+      filter: {
+        nameUnprefix: { sort: "ASC" }
+        top100: { eq: true }
+      }
+    ) {
       totalCount
       pageInfo {
         hasPreviousPage
@@ -51,7 +61,12 @@ export async function getServerSideProps(context: any) {
 
   const otherQuery = `
     query ArtistUnprefixListOther($after: String = "LTE=") {
-      artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", _after: $after }) {
+      artists: artistsUnprefix (
+        filter: {
+          nameUnprefix: { sort: "ASC" }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
@@ -70,7 +85,13 @@ export async function getServerSideProps(context: any) {
 
   const filterQuery = `
     query ArtistList($filter: String = "a", $after: String = "LTE=") {
-      artists: artistsUnprefix (filter: { nameUnprefix_sort: "ASC", name_contains: $filter, _after: $after }) {
+      artists: artistsUnprefix (
+        filter: {
+          nameUnprefix: { sort: "ASC" }
+          name: { contains: $filter }
+        }
+        pagination: { after: $after }
+      ) {
         totalCount
         pageInfo {
           hasPreviousPage
