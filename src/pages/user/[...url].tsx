@@ -3,13 +3,21 @@ import React from 'react';
 import { graphql } from '../../utils/graphql';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { PaginationControls } from 'src/utils/pagination';
-import ListTable from 'src/views/user/list-table';
+import ListTable from 'src/views/user-performance/list-table';
 
 export async function getServerSideProps(context: any) {
   const standardQuery = `
-    query UserListPerformances($username: String!, $listname: String!) {
-      userListPerformances (username: $username, listname: $listname) {
+    query UserListPerformances($username: String!, $listname: String!, $after: String = "LTE=") {
+      userListPerformances (username: $username, listname: $listname,
+        pagination: { after: $after}
+      ) {
+        totalCount
+        pageInfo {
+          hasPreviousPage
+          hasNextPage
+        }
         edges {
+          cursor
           node {
             performance {
               artist {
@@ -19,6 +27,9 @@ export async function getServerSideProps(context: any) {
               id
               year
               date
+              venue
+              city
+              state
             }
             source {
               id
@@ -63,6 +74,7 @@ export async function getServerSideProps(context: any) {
       userByUsername (username: $username) {
         id
         name
+        username
       }
 
       userListByUsername (username: $username, listname: $listname) {
@@ -76,22 +88,23 @@ export async function getServerSideProps(context: any) {
 
   const query = standardQuery;
 
+  const page = context.query.page ? Number(context.query.page) : 1;
+
   const variables = {
     username: context.query.url[0],
     listname: context.query.url[1],
+    after: Buffer.from(String((page - 1) * 300 - 1)).toString('base64'),
   };
 
   return {props: {
     graphql: await graphql(query, variables),
     context: context.query,
-    page: 1,
+    page
   }}
 }
 
 
 function UserListPerformances(props: any) {
-
-  console.log(props.graphql);
 
   return (
     <>
@@ -111,7 +124,7 @@ function UserListPerformances(props: any) {
               <PaginationControls
                 graphql={props.graphql.data.userListPerformances}
                 page={props.page}
-                pathname='/artists'
+                pathname={"/user/" + props.graphql.data.userByUsername.username + "/" + props.graphql.data.userListByUsername.shortname}
               ></PaginationControls>
 
               <ListTable graphql={props.graphql}></ListTable>

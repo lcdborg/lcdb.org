@@ -86,6 +86,10 @@ code[class*='language-'] {
   text-decoration: underline;
 }
 
+.table-striped tr:nth-child(2n+1) {
+  background: #efe1d4;
+}
+
 .table-double-striped tr:nth-child(4n+1), .table-double-striped tr:nth-child(4n+2) {
   background: #efe1d4;
 }
