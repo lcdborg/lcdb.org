@@ -8,7 +8,7 @@ export function graphql(
 ) {
 
   return firstValueFrom(
-    fromFetch(String(process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/graphql'), {
+    fromFetch(String(process.env.NEXT_PUBLIC_GRAPHQL_SERVER), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
