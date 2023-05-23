@@ -4,6 +4,7 @@ import { graphql } from '../../utils/graphql';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { PaginationControls } from 'src/utils/pagination';
 import ListTable from 'src/views/user-performance/list-table';
+import Link from 'next/link';
 
 export async function getServerSideProps(context: any) {
   const standardQuery = `
@@ -75,6 +76,8 @@ export async function getServerSideProps(context: any) {
         id
         name
         username
+        rules
+        email
       }
 
       userListByUsername (username: $username, listname: $listname) {
@@ -118,7 +121,18 @@ function UserListPerformances(props: any) {
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {props.graphql.data.userByUsername.name} - {props.graphql.data.userListByUsername.name}
+                <div style={{ float: "right" }}>
+                  <Link href={"mailto:" + props.graphql.data.userByUsername.email}>
+                    {props.graphql.data.userByUsername.email}
+                  </Link>
+                </div>
               </Typography>
+
+
+              <div dangerouslySetInnerHTML={{ __html: props.graphql.data.userByUsername.rules }} />
+
+              <div dangerouslySetInnerHTML={{ __html: props.graphql.data.userListByUsername.notes }} />
+
               <hr />
 
               <PaginationControls
