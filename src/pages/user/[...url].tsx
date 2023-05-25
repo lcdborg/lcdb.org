@@ -8,8 +8,8 @@ import Link from 'next/link';
 
 export async function getServerSideProps(context: any) {
   const standardQuery = `
-    query UserListPerformances($username: String!, $listname: String!, $after: String = "LTE=") {
-      userListPerformances (username: $username, listname: $listname,
+    query UserPerformancesByUsername($username: String!, $listname: String = "", $after: String = "LTE=") {
+      userPerformances: userPerformancesByUsername (username: $username, listname: $listname,
         pagination: { after: $after}
       ) {
         totalCount
@@ -78,6 +78,15 @@ export async function getServerSideProps(context: any) {
         username
         rules
         email
+        userLists (filter: { name: { sort: "asc" } } ) {
+          edges {
+            node {
+              id
+              name
+              shortname
+            }
+          }
+        }
       }
 
       userListByUsername (username: $username, listname: $listname) {
@@ -95,7 +104,7 @@ export async function getServerSideProps(context: any) {
 
   const variables = {
     username: context.query.url[0],
-    listname: context.query.url[1],
+    listname: context.query.url[1] || "",
     after: Buffer.from(String((page - 1) * 300 - 1)).toString('base64'),
   };
 
@@ -107,12 +116,11 @@ export async function getServerSideProps(context: any) {
 }
 
 
-function UserListPerformances(props: any) {
-
+function UserPerformancesByUsername(props: any) {
   return (
     <>
       <Head>
-        <title>{props.graphql.data.userByUsername.name} - {props.graphql.data.userListByUsername.name}</title>
+        <title>{props.graphql.data.userByUsername.name} {props.graphql.data.userListByUsername ? " - " + props.graphql.data.userListByUsername.name: ""}</title>
       </Head>
 
       <Grid container spacing={6}>
@@ -120,7 +128,9 @@ function UserListPerformances(props: any) {
           <Card sx={{ position: 'relative' }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {props.graphql.data.userByUsername.name} - {props.graphql.data.userListByUsername.name}
+                <Link href={props.graphql.data.userByUsername.username}>
+                  {props.graphql.data.userByUsername.name}
+                </Link> {props.graphql.data.userListByUsername ? " - " + props.graphql.data.userListByUsername.name: ""}
                 <div style={{ float: "right" }}>
                   <Link href={"mailto:" + props.graphql.data.userByUsername.email}>
                     {props.graphql.data.userByUsername.email}
@@ -131,14 +141,31 @@ function UserListPerformances(props: any) {
 
               <div dangerouslySetInnerHTML={{ __html: props.graphql.data.userByUsername.rules }} />
 
-              <div dangerouslySetInnerHTML={{ __html: props.graphql.data.userListByUsername.notes }} />
+              <div dangerouslySetInnerHTML={{ __html: props.graphql.data.userListByUsername
+               ? props.graphql.data.userListByUsername.notes: "" }} />
 
               <hr />
 
+              {props.graphql.data.userByUsername.userLists ? "Sublists: ": ""}
+
+              {
+                props.graphql.data.userByUsername.userLists.edges.map((edge: any, key: any) => (
+                    <ul key={key}>
+                      <li>
+                        <Link href={"/user/" + props.graphql.data.userByUsername.username + "/" + edge.node.shortname}>
+                          {edge.node.name}
+                        </Link>
+                      </li>
+                    </ul>
+                  ))
+              }
+
+              {props.graphql.data.userByUsername.userLists ? (<hr />) : ""}
+
               <PaginationControls
-                graphql={props.graphql.data.userListPerformances}
+                graphql={props.graphql.data.userPerformances}
                 page={props.page}
-                pathname={"/user/" + props.graphql.data.userByUsername.username + "/" + props.graphql.data.userListByUsername.shortname}
+                pathname={"/user/" + props.graphql.data.userByUsername.username + (props.graphql.data.userListByUsername ? "/" + props.graphql.data.userListByUsername.shortname: "")}
               ></PaginationControls>
 
               <ListTable graphql={props.graphql}></ListTable>
@@ -151,4 +178,4 @@ function UserListPerformances(props: any) {
   );
 }
 
-export default UserListPerformances;
+export default UserPerformancesByUsername;

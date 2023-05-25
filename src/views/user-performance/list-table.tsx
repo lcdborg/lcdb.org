@@ -7,7 +7,7 @@ import UserPerformanceLink from "./user-performance-link";
 export default function ArtistsTable(props: any) {
   const graphql: any = props.graphql;
 
-  if (!graphql.data || !graphql.data.userListPerformances.totalCount) {
+  if (!graphql.data || !graphql.data.userPerformances.totalCount) {
     return (
       <Grid container spacing={6}>
         <Grid item xs={12} md={12}>
@@ -29,7 +29,7 @@ export default function ArtistsTable(props: any) {
       </thead>
       <tbody>
       {
-        graphql.data.userListPerformances.edges.map((edge: any, key: any) => (
+        graphql.data.userPerformances.edges.map((edge: any, key: any) => (
           <>
             <tr key={key}>
               <td>
