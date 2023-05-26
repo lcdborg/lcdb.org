@@ -4,7 +4,7 @@ import { PerformanceLink } from "../performance/performance-link";
 import SourceLink from "../source/source-link";
 import UserPerformanceLink from "./user-performance-link";
 
-export default function ArtistsTable(props: any) {
+export default function UserPerformanceTable(props: any) {
   const graphql: any = props.graphql;
 
   if (!graphql.data || !graphql.data.userPerformances.totalCount) {
@@ -25,6 +25,7 @@ export default function ArtistsTable(props: any) {
           <th>Date</th>
           <th>Artist</th>
           <th>SHNID</th>
+          <th>Reference #</th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +44,9 @@ export default function ArtistsTable(props: any) {
               </td>
               <td>
                 <SourceLink source={edge.node.source}></SourceLink>
+              </td>
+              <td>
+                {edge.node.reference_number}
               </td>
             </tr>
           </>
