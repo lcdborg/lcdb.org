@@ -3,7 +3,8 @@ import React from 'react';
 import { graphql } from '../../utils/graphql';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 import { PaginationControls } from 'src/utils/pagination';
-import ListTable from 'src/views/user-performance/list-table';
+import UserListTable from 'src/views/user-list/list-table';
+import UserPerformanceTable from 'src/views/user-performance/list-table';
 import Link from 'next/link';
 
 export async function getServerSideProps(context: any) {
@@ -78,12 +79,14 @@ export async function getServerSideProps(context: any) {
         username
         rules
         email
+        userPerformanceCount
         userLists (filter: { name: { sort: "asc" } } ) {
           edges {
             node {
               id
               name
               shortname
+              userPerformanceCount
             }
           }
         }
@@ -117,6 +120,12 @@ export async function getServerSideProps(context: any) {
 
 
 function UserPerformancesByUsername(props: any) {
+/*
+  console.log(props.graphql);
+
+  return (<div>asdf</div>)
+*/
+
   return (
     <>
       <Head>
@@ -128,7 +137,7 @@ function UserPerformancesByUsername(props: any) {
           <Card sx={{ position: 'relative' }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                <Link href={props.graphql.data.userByUsername.username}>
+                <Link href={"/user/" + props.graphql.data.userByUsername.username}>
                   {props.graphql.data.userByUsername.name}
                 </Link> {props.graphql.data.userListByUsername ? " - " + props.graphql.data.userListByUsername.name: ""}
                 <div style={{ float: "right" }}>
@@ -146,21 +155,12 @@ function UserPerformancesByUsername(props: any) {
 
               <hr />
 
-              {props.graphql.data.userByUsername.userLists ? "Sublists: ": ""}
+              <UserListTable
+                user={props.graphql.data.userByUsername}
+                userLists={props.graphql.data.userByUsername.userLists}
+              ></UserListTable>
 
-              {
-                props.graphql.data.userByUsername.userLists.edges.map((edge: any, key: any) => (
-                    <ul key={key}>
-                      <li>
-                        <Link href={"/user/" + props.graphql.data.userByUsername.username + "/" + edge.node.shortname}>
-                          {edge.node.name}
-                        </Link>
-                      </li>
-                    </ul>
-                  ))
-              }
-
-              {props.graphql.data.userByUsername.userLists ? (<hr />) : ""}
+              <hr />
 
               <PaginationControls
                 graphql={props.graphql.data.userPerformances}
@@ -168,7 +168,7 @@ function UserPerformancesByUsername(props: any) {
                 pathname={"/user/" + props.graphql.data.userByUsername.username + (props.graphql.data.userListByUsername ? "/" + props.graphql.data.userListByUsername.shortname: "")}
               ></PaginationControls>
 
-              <ListTable graphql={props.graphql}></ListTable>
+              <UserPerformanceTable graphql={props.graphql}></UserPerformanceTable>
 
             </CardContent>
           </Card>
