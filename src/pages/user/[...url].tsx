@@ -108,7 +108,7 @@ export async function getServerSideProps(context: any) {
   const variables = {
     username: context.query.url[0],
     listname: context.query.url[1] || "",
-    after: Buffer.from(String((page - 1) * 300 - 1)).toString('base64'),
+    after: Buffer.from(String((page - 1) * 1000 - 1)).toString('base64'),
   };
 
   return {props: {
@@ -120,7 +120,8 @@ export async function getServerSideProps(context: any) {
 
 
 function UserPerformancesByUsername(props: any) {
-/*
+
+  /*
   console.log(props.graphql);
 
   return (<div>asdf</div>)
@@ -166,6 +167,7 @@ function UserPerformancesByUsername(props: any) {
                 graphql={props.graphql.data.userPerformances}
                 page={props.page}
                 pathname={"/user/" + props.graphql.data.userByUsername.username + (props.graphql.data.userListByUsername ? "/" + props.graphql.data.userListByUsername.shortname: "")}
+                limit={1000}
               ></PaginationControls>
 
               <UserPerformanceTable graphql={props.graphql}></UserPerformanceTable>
