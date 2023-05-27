@@ -116,3 +116,7 @@ tr, td {
 .performance-date {
   white-space: nowrap;
 }
+
+th {
+  background: #ef9b49;
+}

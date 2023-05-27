@@ -124,13 +124,16 @@ const Years = (props: any) => {
 
   props.graphql.data.years.map((year: any, key: any) => {
     years.push((
-      <a
-        key={key}
-        href={"/sources/" + props.graphql.data.artist.id + "?year=" + year}
-        className="year-link"
-      >
-        {(year === 1939) ? 'unknown' : year}
-      </a>
+      <>
+        <a
+          key={key}
+          href={"/sources/" + props.graphql.data.artist.id + "?year=" + year}
+          className="year-link"
+        >
+          {(year === 1939) ? 'unknown' : year}
+        </a>
+        {' '}
+      </>
     ));
   });
 
