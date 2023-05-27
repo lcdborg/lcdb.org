@@ -2,11 +2,11 @@ import { SkipBackward, SkipForward, SkipNext, SkipPrevious } from 'mdi-material-
 import Link from 'next/link';
 import UserIcon from 'src/layouts/components/UserIcon';
 
-function getMaxPage(totalCount: number): number {
-  return Math.ceil(totalCount / 300);
+function getMaxPage(limit: number, totalCount: number): number {
+  return Math.ceil(totalCount / limit);
 }
 
-function getPages(page: number, totalCount: number): number[] {
+function getPages(limit: number, page: number, totalCount: number): number[] {
   const pages = [];
 
   for (let i = page; i >= page - 2; i--) {
@@ -16,9 +16,9 @@ function getPages(page: number, totalCount: number): number[] {
   }
 
   for (let i = page + 1; i <= page + 4; i++) {
-    const total = Math.ceil(totalCount / 300) * 300;
+    const total = Math.ceil(totalCount / limit) * limit;
 
-    if (total - (i * 300) >= 0) {
+    if (total - (i * limit) >= 0) {
       if (! pages.includes(i) && pages.length < 5) {
         pages.push(i);
       }
@@ -26,9 +26,9 @@ function getPages(page: number, totalCount: number): number[] {
   }
 
   for (let i = page; i > 1 + 4; i--) {
-    const total = Math.ceil(totalCount / 300) * 300;
+    const total = Math.ceil(totalCount / limit) * limit;
 
-    if (total - (i * 300) >= 0) {
+    if (total - (i * limit) >= 0) {
       if (i >= 1 && ! pages.includes(i) && pages.length < 5) {
         pages.push(i);
       }
@@ -56,6 +56,7 @@ export function PaginationControls(props: any) {
 
   const controls = [];
   const pathname = props.pathname;
+  const limit = props.limit || 300;
 
   controls.push((
     <Link href={{pathname, query: {page: 1, ...props.baseQuery}}}>
@@ -75,7 +76,7 @@ export function PaginationControls(props: any) {
     ));
   }
 
-  getPages(props.page, props.graphql.totalCount).map((mapPage: any, key: any) => {
+  getPages(limit, props.page, props.graphql.totalCount).map((mapPage: any, key: any) => {
     controls.push((
       <Link key={key} href={{pathname, query: {page: mapPage, ...props.baseQuery}}}>
         <a className="pagination-link">
@@ -96,7 +97,7 @@ export function PaginationControls(props: any) {
   }
 
   controls.push((
-    <Link href={{pathname, query: {page: getMaxPage(props.graphql.totalCount), ...props.baseQuery}}}>
+    <Link href={{pathname, query: {page: getMaxPage(limit, props.graphql.totalCount), ...props.baseQuery}}}>
       <a className="pagination-link">
         <UserIcon icon={SkipForward}></UserIcon>
       </a>
