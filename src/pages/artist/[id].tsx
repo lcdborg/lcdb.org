@@ -13,12 +13,11 @@ import SourcesButton from 'src/views/components/buttons/sources';
 export async function getServerSideProps(context: any) {
   const query = `
     query Artist($id: Int!, $year: Int = 2022) {
-      sourceCount(id: $id)
-
       artist (id: $id) {
         id
         name
         years
+        sourceCount
         creators {
           edges {
             node {
@@ -102,7 +101,7 @@ export async function getServerSideProps(context: any) {
 const NavButtons = (props: any) => {
   const buttons: any[] = [];
 
-  if ( props.graphql.data.sourceCount) {
+  if ( props.graphql.data.artist.sourceCount) {
     buttons.push((
       <SourcesButton artist={props.graphql.data.artist} year={props.year}></SourcesButton>
     ))

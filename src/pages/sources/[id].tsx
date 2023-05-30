@@ -9,11 +9,10 @@ import ArtistGroupButton from 'src/views/components/buttons/artist-group';
 export async function getServerSideProps(context: any) {
   const query = `
     query ArtistSources($id: Int!, $after: String = "LTE=") {
-      years: sourceYears(id: $id)
-
       artist (id: $id) {
         id
         name
+        sourceYears
         artistToArtistGroups {
           edges {
             node {
@@ -76,13 +75,15 @@ export async function getServerSideProps(context: any) {
 
   if (! year) {
     const latestYearQuery = `
-      query SourceLatestYear($id: Int!) {
-        sourceLatestYear(id: $id)
+      query Artist($id: Int!) {
+        artist (id: $id) {
+          sourceLatestYear
+        }
       }
     `;
 
     const result = await graphql(latestYearQuery, {id});
-    year = result.data.sourceLatestYear;
+    year = result.data.artist.sourceLatestYear;
   }
 
   const graphqlResult = await graphql(query, {id, year, after}, 'ArtistSources');
@@ -122,7 +123,7 @@ const NavButtons = (props: any) => {
 const Years = (props: any) => {
   const years: any[] = [];
 
-  props.graphql.data.years.map((year: any, key: any) => {
+  props.graphql.data.artist.sourceYears.map((year: any, key: any) => {
     years.push((
       <>
         <a
