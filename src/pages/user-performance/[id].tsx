@@ -42,29 +42,11 @@ export async function getServerSideProps(context: any) {
           name
         }
         source {
-          id
-          createdAt
-          updatedAt
-          circdate
-          archiveIdentifier
-          comments
-          performance {
-            id
-            date
-            year
-            venue
-            city
-            state
-            artist {
-              id
-              name
-            }
-          }
+          ...SourceParts
         }
         performance {
           artist {
-            id
-            name
+            ...ArtistParts
           }
           id
           date
@@ -81,27 +63,35 @@ export async function getServerSideProps(context: any) {
           sources {
             edges {
               node {
-                id
-                createdAt
-                updatedAt
-                circdate
-                archiveIdentifier
-                comments
-                performance {
-                  id
-                  date
-                  year
-                  venue
-                  city
-                  state
-                  artist {
-                    id
-                    name
-                  }
-                }
+                ...SourceParts
               }
             }
           }
+        }
+      }
+    }
+
+    fragment ArtistParts on Artist {
+      id
+      name
+    }
+
+    fragment SourceParts on Source {
+      id
+      createdAt
+      updatedAt
+      circdate
+      archiveIdentifier
+      comments
+      performance {
+        id
+        date
+        year
+        venue
+        city
+        state
+        artist {
+          ...ArtistParts
         }
       }
     }

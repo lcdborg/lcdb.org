@@ -1,4 +1,5 @@
 import dateFormat from "src/utils/date-format";
+import nl2br from "src/utils/nl2br";
 
 export function DetailTable(props: any) {
   const fields = {
@@ -45,11 +46,23 @@ export function DetailTable(props: any) {
 
         {Object.entries(fields).map((field: any, key: any) => {
           if (props.userPerformance[field[0]]) {
+
+            let value = props.userPerformance[field[0]];
+
+            switch (field[0]) {
+              case 'note':
+              case 'microphones':
+              case 'sourceInfo':
+                value = nl2br(props.userPerformance[field[0]]);
+                break;
+            }
+
+
             return (
               <tr key={key}>
                 <td>{field[1]}</td>
                 <td>
-                  {props.userPerformance[field[0]]}
+                  {value}
                 </td>
               </tr>
             )

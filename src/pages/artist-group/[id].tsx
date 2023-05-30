@@ -11,18 +11,15 @@ import { FlipVertical } from 'mdi-material-ui';
 export async function getServerSideProps(context: any) {
   const query = `
   query ArtistGroupPerformances($id: Int!, $year: Int = 2022) {
-    years: artistGroupYears(id: $id)
-
-    sourceCount: artistGroupSourceCount(id: $id)
-
-    artistGroupArtists(id: $id) {
-      id
-      name
-    }
-
     artistGroup (id: $id) {
       id
       title
+      sourceCount
+      performanceYears
+      artistsByName {
+        id
+        name
+      }
     }
 
     performances (
@@ -68,13 +65,16 @@ export async function getServerSideProps(context: any) {
 
   if (! year) {
     const latestYearQuery = `
-      query ArtistGroupLatestYear($id: Int!) {
-        latestYear: artistGroupLatestYear(id: $id)
+      query ArtistGroup($id: Int!) {
+        artistGroup (id: $id) {
+          latestYear
+        }
       }
     `;
 
-    const result = await graphql(latestYearQuery, {id}, '');
-    year = result.data.latestYear;
+    const result = await graphql(latestYearQuery, {id});
+
+    year = result.data.artistGroup.latestYear;
   }
 
   const graphqlResult = await graphql(query, {id, year}, 'ArtistGroupPerformances');
@@ -91,14 +91,14 @@ export async function getServerSideProps(context: any) {
 const NavButtons = (props: any) => {
   const buttons: any[] = [];
 
-  if ( props.graphql.data.sourceCount) {
+  if ( props.graphql.data.artistGroup.sourceCount) {
     buttons.push((
       <SourceArtistGroupButton artistGroup={props.graphql.data.artistGroup} year={props.year}></SourceArtistGroupButton>
     ))
   }
 
-  if (props.graphql.data.artistGroupArtists) {
-    props.graphql.data.artistGroupArtists.map((edge: any, key: any) => {
+  if (props.graphql.data.artistGroup.artistsByName) {
+    props.graphql.data.artistGroup.artistsByName.map((edge: any, key: any) => {
       buttons.push((
         <ArtistButton key={key} artist={edge} year={props.year}></ArtistButton>
       ));
@@ -127,7 +127,7 @@ const NavButtons = (props: any) => {
 const Years = (props: any) => {
   const years: any[] = [];
 
-  props.graphql.data.years.map((year: any, key: any) => {
+  props.graphql.data.artistGroup.performanceYears.map((year: any, key: any) => {
     years.push((
       <>
       <a

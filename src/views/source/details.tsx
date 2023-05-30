@@ -13,12 +13,13 @@ export default function Details(props: any) {
   return (
     <>
       <Typography gutterBottom variant="h5" component="div">
-        <ArchiveIdentifier identifier={props.source.archiveIdentifier}></ArchiveIdentifier>
+        SHNID {String(props.source.id)}
+        {' '}
         <ArtistLink artist={props.source.performance.artist} year={props.source.performance.year}></ArtistLink>
-        &nbsp;
+        {' '}
         <PerformanceLink performance={props.source.performance}></PerformanceLink>
-        &nbsp;
-        (SHNID {String(props.source.id)})
+        {' '}
+        <ArchiveIdentifier identifier={props.source.archiveIdentifier}></ArchiveIdentifier>
       </Typography>
 
       <Typography gutterBottom variant="h5" component="div">

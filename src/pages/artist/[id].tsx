@@ -13,13 +13,11 @@ import SourcesButton from 'src/views/components/buttons/sources';
 export async function getServerSideProps(context: any) {
   const query = `
     query Artist($id: Int!, $year: Int = 2022) {
-      years: artistYears(id: $id)
-
-      sourceCount(id: $id)
-
       artist (id: $id) {
         id
         name
+        years
+        sourceCount
         creators {
           edges {
             node {
@@ -79,12 +77,14 @@ export async function getServerSideProps(context: any) {
   if (! year) {
     const artistLatestYearQuery = `
       query Artist($id: Int!) {
-        artistLatestYear(id: $id)
+        artist (id: $id) {
+          latestYear
+        }
       }
     `;
 
     const result = await graphql(artistLatestYearQuery, {id}, 'Artist');
-    year = result.data.artistLatestYear;
+    year = result.data.artist.latestYear;
   }
 
   const graphqlResult = await graphql(query, {id, year}, '');
@@ -101,7 +101,7 @@ export async function getServerSideProps(context: any) {
 const NavButtons = (props: any) => {
   const buttons: any[] = [];
 
-  if ( props.graphql.data.sourceCount) {
+  if ( props.graphql.data.artist.sourceCount) {
     buttons.push((
       <SourcesButton artist={props.graphql.data.artist} year={props.year}></SourcesButton>
     ))
@@ -146,7 +146,7 @@ const NavButtons = (props: any) => {
 const Years = (props: any) => {
   const years: any[] = [];
 
-  props.graphql.data.years.map((year: any, key: any) => {
+  props.graphql.data.artist.years.map((year: any, key: any) => {
     years.push((
       <>
       <Link
