@@ -10,18 +10,16 @@ import SourcesButton from 'src/views/components/buttons/sources';
 export async function getServerSideProps(context: any) {
   const query = `
     query ArtistGroupSources($id: Int!, $after: String = "LTE=") {
-      years: artistGroupSourceYears(id: $id)
-
-      artistGroupArtists(id: $id) {
-        id
-        name
-      }
-
       artistGroup (id: $id) {
         id
         title
         header
         footer
+        sourceYears
+        artistsByName {
+          id
+          name
+        }
       }
 
       sources (
@@ -69,14 +67,16 @@ export async function getServerSideProps(context: any) {
 
   async function getLatestYear() {
     const latestYearQuery = `
-    query ArtistGroupSourceLatestYear($id: Int!) {
-      latestYear: artistGroupSourceLatestYear(id: $id)
+      query ArtistGroup($id: Int!) {
+        artistGroup (id: $id) {
+          sourceLatestYear
+        }
       }
     `;
 
     const result = await graphql(latestYearQuery, {id});
 
-    return result.data.latestYear;
+    return result.data.artistGroup.sourceLatestYear;
   }
 
   const page = Number(context.query.page) || 1;
@@ -107,8 +107,8 @@ const NavButtons = (props: any) => {
     <ArtistGroupButton artistGroup={props.graphql.data.artistGroup} year={props.year}></ArtistGroupButton>
   ));
 
-  if (props.graphql.data.artistGroupArtists) {
-    props.graphql.data.artistGroupArtists.map((node: any, key: any) => {
+  if (props.graphql.data.artistGroup.artistsByName) {
+    props.graphql.data.artistGroup.artistsByName.map((node: any, key: any) => {
       buttons.push((
         <SourcesButton key={key} artist={node} year={props.year}></SourcesButton>
       ));
@@ -125,7 +125,7 @@ const NavButtons = (props: any) => {
 const Years = (props: any) => {
   const years: any[] = [];
 
-  props.graphql.data.years.map((year: any, key: any) => {
+  props.graphql.data.artistGroup.sourceYears.map((year: any, key: any) => {
     years.push((
       <>
       <Link

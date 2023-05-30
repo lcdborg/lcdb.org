@@ -63,13 +63,15 @@ function Source(props: any) {
     <>
       <Head>
         <title>
-          LCDB:
+          SHNID
+          {' '}
+          {String(props.graphql.data.source.id)}
           {' '}
           {props.graphql.data.source.performance.artist.name}
           {' '}
           {performanceDate(props.graphql.data.source.performance)}
           {' '}
-          ({String(props.graphql.data.source.id)})
+
         </title>
       </Head>
 
