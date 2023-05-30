@@ -11,7 +11,7 @@ export default function Details(props: any) {
     <>
       <Typography gutterBottom variant="h5" component="div">
         <ArtistLink artist={props.performance.artist} year={props.performance.year}></ArtistLink>
-        &nbsp;
+        {' '}
         {performanceDate(props.performance)}
       </Typography>
 
