@@ -23,21 +23,12 @@ export async function getServerSideProps(context: any) {
         sources {
           edges {
             node {
-
               id
               createdAt
               updatedAt
-
               circdate
-              shndiskcount
-              wavdiskcount
               archiveIdentifier
-
               comments
-              textdoc
-
-              mediaSize
-              mediaSizeUncompressed
               performance {
                 id
                 date
@@ -86,8 +77,6 @@ function Performance(props: any) {
     <>
       <Head>
         <title>
-          LCDB:
-          {' '}
           {props.graphql.data.performance.artist.name}
           {' '}
           {performanceDate(props.graphql.data.performance)}

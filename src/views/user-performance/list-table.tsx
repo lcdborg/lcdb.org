@@ -1,6 +1,5 @@
 import { Grid } from "@mui/material";
 import ArtistLink from "../artist/artist-link";
-import { PerformanceLink } from "../performance/performance-link";
 import SourceLink from "../source/source-link";
 import UserPerformanceLink from "./user-performance-link";
 
@@ -22,7 +21,6 @@ export default function UserPerformanceTable(props: any) {
       <thead>
         <tr>
           <th>Details</th>
-          <th>Date</th>
           <th>Artist</th>
           <th>SHNID</th>
           <th>Reference #</th>
@@ -35,9 +33,6 @@ export default function UserPerformanceTable(props: any) {
             <tr key={key}>
               <td>
                 <UserPerformanceLink userPerformance={edge.node}></UserPerformanceLink>
-              </td>
-              <td>
-                <PerformanceLink performance={edge.node.performance}></PerformanceLink>
               </td>
               <td>
                 <ArtistLink artist={edge.node.performance.artist} year={edge.node.performance.year}></ArtistLink>
