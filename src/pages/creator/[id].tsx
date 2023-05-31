@@ -8,12 +8,10 @@ import ListTable from "src/views/identifier/list-table";
 export async function getServerSideProps(context: any) {
   const query = `
     query CreatorIdentifiers($id: Int!, $after: String = "LTE=", $year: String = "2022") {
-
-      years: creatorYears(id: $id)
-
       creator(id: $id) {
         id
         name
+        years
         artist {
           id
           name
@@ -55,13 +53,15 @@ export async function getServerSideProps(context: any) {
 
   if (! year) {
     const latestYearQuery = `
-      query CreatorLatestYear($id: Int!) {
-        latestYear: creatorLatestYear(id: $id)
+      query Creator($id: Int!) {
+        creator (id: $id) {
+          latestYear
+        }
       }
     `;
 
     const result = await graphql(latestYearQuery, {id});
-    year = String(result.data.latestYear);
+    year = String(result.data.creator.latestYear);
   }
 
   const graphqlResult = await graphql(query, {id, year, after}, 'CreatorIdentifiers');
@@ -78,7 +78,7 @@ export async function getServerSideProps(context: any) {
 const Years = (props: any) => {
   const years: any[] = [];
 
-  props.graphql.data.years.map((year: any, key: any) => {
+  props.graphql.data.creator.years.map((year: any, key: any) => {
     years.push((
       <>
         <a
