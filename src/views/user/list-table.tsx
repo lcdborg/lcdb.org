@@ -1,6 +1,6 @@
 import { UserLink } from "./user-link";
 import ArtistLink from "../artist/artist-link";
-import dateFormat from "../../utils/date-format.ts";
+import dateFormat from "src/utils/date-format";
 
 export function UserTable(props: any) {
 
