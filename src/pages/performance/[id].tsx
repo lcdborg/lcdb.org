@@ -1,8 +1,9 @@
-import { Card, CardContent, Grid } from "@mui/material";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
 import Head from "next/head";
 import { graphql } from "src/utils/graphql";
 import Details from "src/views/performance/details";
 import performanceDate from "src/views/performance/performance-date";
+import { UserTable } from "src/views/user/list-table";
 
 export async function getServerSideProps(context: any) {
   const query = `
@@ -58,9 +59,30 @@ export async function getServerSideProps(context: any) {
             }
           }
         }
+        users (pagination: {first: 25}) {
+          edges {
+            node {
+              ...UserTableParts
+            }
+          }
+        }
       }
     }
-    `;
+
+    fragment UserTableParts on User {
+      id
+      name
+      username
+      activetrading
+      userPerformanceCount
+      lastUpdate
+      topArtists (first: 4) {
+        id
+        name
+        userPerformanceCount
+      }
+    }
+  `;
 
   const id = Number(context.query.id);
   const graphqlResult = await graphql(query, {id}, 'Performance');
@@ -73,6 +95,7 @@ export async function getServerSideProps(context: any) {
 }
 
 function Performance(props: any) {
+
   return (
     <>
       <Head>
@@ -88,6 +111,13 @@ function Performance(props: any) {
           <Card sx={{ position: 'relative' }}>
             <CardContent>
               <Details performance={props.graphql.data.performance}></Details>
+
+              <hr />
+              <Typography gutterBottom variant="h5" component="div">
+                Users with this performance
+              </Typography>
+
+              <UserTable users={props.graphql.data.performance.users}></UserTable>
             </CardContent>
           </Card>
         </Grid>

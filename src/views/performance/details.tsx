@@ -50,10 +50,10 @@ export default function Details(props: any) {
         </Grid>
         <Grid item xs={12} md={12}>
           <hr />
-          <strong>Sources</strong>
-          <div>
-            <ListTable sources={props.performance.sources}></ListTable>
-          </div>
+          <Typography gutterBottom variant="h5" component="div">
+            Sources
+          </Typography>
+          <ListTable sources={props.performance.sources}></ListTable>
         </Grid>
 
         <Grid item xs={6} md={6}  style={{fontSize: '.8em'}}>
