@@ -1,4 +1,4 @@
-import dateFormat from "src/utils/date-format";
+import { dateFormat } from "src/utils/date-format";
 import nl2br from "src/utils/nl2br";
 
 export function DetailTable(props: any) {

@@ -3,7 +3,7 @@ import nl2br from "src/utils/nl2br";
 import Venue from "../performance/venue";
 import ArtistLink from "../artist/artist-link";
 import { PerformanceLink } from "../performance/performance-link";
-import dateFormat from "src/utils/date-format";
+import { dateFormat } from "src/utils/date-format";
 import MediaSize from "./media-size";
 import Checksums from "./checksums";
 import Link from "next/link";

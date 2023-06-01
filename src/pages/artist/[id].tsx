@@ -182,7 +182,7 @@ function Artist(props: any) {
   return (
     <>
       <Head>
-        <title>LCDB: Performances for {props.graphql.data.artist.name}</title>
+        <title>{props.graphql.data.artist.name}</title>
       </Head>
 
       <Grid container spacing={6}>
@@ -194,6 +194,10 @@ function Artist(props: any) {
               </Typography>
 
               <NavButtons toggleSets={toggleSets} year={props.year} graphql={props.graphql}></NavButtons>
+
+              <Link href={"/artist-users/" + props.graphql.data.artist.id}>
+                Users
+              </Link>
 
               <div className="card-category">
                 <Years graphql={props.graphql}></Years>
