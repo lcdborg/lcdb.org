@@ -4,7 +4,7 @@ import Venue from "./venue";
 import ListTable from "src/views/source/list-table";
 import ArtistLink from "../artist/artist-link";
 import performanceDate from "./performance-date";
-import dateFormat from "src/utils/date-format";
+import { dateFormat } from "src/utils/date-format";
 
 export default function Details(props: any) {
   return (

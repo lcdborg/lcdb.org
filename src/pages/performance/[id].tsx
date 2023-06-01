@@ -113,11 +113,21 @@ function Performance(props: any) {
               <Details performance={props.graphql.data.performance}></Details>
 
               <hr />
-              <Typography gutterBottom variant="h5" component="div">
-                Users with this performance
-              </Typography>
+              {
+                props.graphql.data.performance.users.edges.length ? (
+                  <>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Users with this performance
+                    </Typography>
 
-              <UserTable users={props.graphql.data.performance.users}></UserTable>
+                    <UserTable users={props.graphql.data.performance.users}></UserTable>
+                  </>
+                ): (<>
+                    <Typography gutterBottom variant="h5" component="div">
+                      No users own this performance
+                    </Typography>
+                </>)
+              }
             </CardContent>
           </Card>
         </Grid>

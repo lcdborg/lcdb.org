@@ -1,8 +1,9 @@
-import { Card, CardContent, Grid } from "@mui/material";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
 import Head from "next/head";
 import { graphql } from "src/utils/graphql";
 import performanceDate from "src/views/performance/performance-date";
 import Details from "src/views/source/details";
+import { UserTable } from "src/views/user/list-table";
 
 export async function getServerSideProps(context: any) {
   const query = `
@@ -44,6 +45,28 @@ export async function getServerSideProps(context: any) {
             name
           }
         }
+
+        users (pagination: {first: 25}) {
+          edges {
+            node {
+              ...UserTableParts
+            }
+          }
+        }
+      }
+    }
+
+    fragment UserTableParts on User {
+      id
+      name
+      username
+      activetrading
+      userPerformanceCount
+      lastUpdate
+      topArtists (first: 4) {
+        id
+        name
+        userPerformanceCount
       }
     }
   `;
@@ -80,6 +103,23 @@ function Source(props: any) {
           <Card sx={{ position: 'relative' }}>
             <CardContent>
               <Details source={props.graphql.data.source}></Details>
+
+              <hr />
+              {
+                props.graphql.data.source.users.edges.length ? (
+                  <>
+                    <Typography gutterBottom variant="h5" component="div">
+                      Users with this source
+                    </Typography>
+
+                    <UserTable users={props.graphql.data.source.users}></UserTable>
+                  </>
+                ): (<>
+                    <Typography gutterBottom variant="h5" component="div">
+                      No users own this source
+                    </Typography>
+                </>)
+              }
             </CardContent>
           </Card>
         </Grid>

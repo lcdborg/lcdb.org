@@ -1,6 +1,6 @@
 import { UserLink } from "./user-link";
 import ArtistLink from "../artist/artist-link";
-import dateFormat from "src/utils/date-format";
+import { dateFormatShort } from "src/utils/date-format";
 
 export function UserTable(props: any) {
 
@@ -9,9 +9,9 @@ export function UserTable(props: any) {
       <thead>
         <tr>
           <th>Name</th>
-          <th>Total Performances</th>
-          <th>Actively Trading (0-5)</th>
-          <th>Top Collections (count)</th>
+          <th>#</th>
+          <th>Active (0-5)</th>
+          <th>Top Collections</th>
           <th>Last Update</th>
         </tr>
       </thead>
@@ -41,8 +41,8 @@ export function UserTable(props: any) {
                 }
               </ul>
             </td>
-            <td>
-              {dateFormat(edge.node.lastUpdate)}
+            <td align="center">
+              {dateFormatShort(edge.node.lastUpdate)}
             </td>
           </tr>
         ))
