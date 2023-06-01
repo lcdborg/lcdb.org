@@ -1,5 +1,6 @@
 import { Card, CardContent, Grid, Typography } from "@mui/material";
 import Head from "next/head";
+import { userTableFragment } from "src/graphql/fragment/user-table-fragement";
 import { graphql } from "src/utils/graphql";
 import Details from "src/views/performance/details";
 import performanceDate from "src/views/performance/performance-date";
@@ -60,29 +61,11 @@ export async function getServerSideProps(context: any) {
           }
         }
         users (pagination: {first: 25}) {
-          edges {
-            node {
-              ...UserTableParts
-            }
-          }
+          ...UserTableFragment
         }
       }
     }
-
-    fragment UserTableParts on User {
-      id
-      name
-      username
-      activetrading
-      userPerformanceCount
-      lastUpdate
-      topArtists (first: 4) {
-        id
-        name
-        userPerformanceCount
-      }
-    }
-  `;
+  ` + userTableFragment;
 
   const id = Number(context.query.id);
   const graphqlResult = await graphql(query, {id}, 'Performance');
