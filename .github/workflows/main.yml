@@ -1,4 +1,3 @@
-# .github/workflow/main.yml
 name: npm run build
 on:
   pull_request:
@@ -18,7 +17,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-    - run: npm install
+    - run: yarn install
     - run: npm run build
       env:
         DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
