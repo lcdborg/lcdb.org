@@ -60,6 +60,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       graphql: graphqlResult,
+      server: process.env.NEXT_PUBLIC_GRAPHQL_SERVER
     },
   }
 }
@@ -85,7 +86,7 @@ function Source(props: any) {
         <Grid item xs={12} md={12}>
           <Card sx={{ position: 'relative' }}>
             <CardContent>
-              <Details source={props.graphql.data.source}></Details>
+              <Details server={props.server} source={props.graphql.data.source}></Details>
 
               <hr />
               {

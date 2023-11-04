@@ -43,6 +43,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       graphql: graphqlResult,
+      server: process.env.NEXT_PUBLIC_GRAPHQL_SERVER,
     },
   }
 }
@@ -60,7 +61,7 @@ function Identifier(props: any) {
         <Grid item xs={12} md={12}>
           <Card sx={{ position: 'relative' }}>
             <CardContent>
-              <Details identifier={props.graphql.data.identifier}></Details>
+              <Details server={props.server} identifier={props.graphql.data.identifier}></Details>
             </CardContent>
           </Card>
         </Grid>

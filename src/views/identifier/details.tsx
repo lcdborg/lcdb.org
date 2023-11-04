@@ -34,7 +34,7 @@ function Files(props: any) {
           {edge.node.name}
           {' '}
           <span>
-            (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/file/' + String(edge.node.id) + '/download'}>
+            (<Link href={props.server + '/api/file/' + String(edge.node.id) + '/download'}>
               download
             </Link>)
           </span>
@@ -52,7 +52,7 @@ function Files(props: any) {
             <th>Files
               {' '}
               <span>
-                (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/identifier/' + props.identifier.archiveIdentifier + '/download'}>
+                (<Link href={props.server + '/api/identifier/' + props.identifier.archiveIdentifier + '/download'}>
                   download all files
                 </Link>)
               </span>
@@ -111,7 +111,11 @@ export default function Details(props: any) {
         </Grid>
       </Grid>
 
-      <Files files={props.identifier.files} identifier={props.identifier}></Files>
+      <Files
+        server={props.server}
+        files={props.identifier.files}
+        identifier={props.identifier}
+      ></Files>
     </>
   )
 }

@@ -32,7 +32,7 @@ export default function Details(props: any) {
           <strong>Summary</strong>
           &nbsp;
           <span>
-            (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/source/' + String(props.source.id) + '/download'}>
+            (<Link href={props.server + '/api/source/' + String(props.source.id) + '/download'}>
               download all files
             </Link>)
           </span>
@@ -45,7 +45,7 @@ export default function Details(props: any) {
           <strong>Textdoc</strong>
           {' '}
           <span>
-            (<Link href={process.env.NEXT_PUBLIC_GRAPHQL_SERVER + '/api/source/' + String(props.source.id) + '/textdoc/download'}>
+            (<Link href={props.server + '/api/source/' + String(props.source.id) + '/textdoc/download'}>
               download
             </Link>)
           </span>
@@ -103,7 +103,7 @@ export default function Details(props: any) {
         </Grid>
       </Grid>
 
-      <Checksums checksums={props.source.checksums}></Checksums>
+      <Checksums server={props.server} checksums={props.source.checksums}></Checksums>
     </>
   )
 }
