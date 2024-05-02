@@ -1,5 +1,5 @@
 export const userTableFragment = `
-  fragment UserTableFragment on User_Connection {
+  fragment UserTableFragment on Connection_User {
     edges {
       cursor
 
