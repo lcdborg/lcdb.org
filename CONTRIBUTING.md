@@ -117,6 +117,32 @@ project:
   PHPUnit in sequence. All four must pass before a PR will be accepted. Run it early
   and often.
 
+## Submitting a Pull Request
+
+This repository does not grant contributors direct push access. All changes come
+in via a personal fork.
+
+```bash
+# 1. Fork the repo to your own GitHub account (one-time)
+gh repo fork lcdborg/lcdb.org --clone=false
+
+# 2. Add your fork as a remote (one-time, replace YOUR_USERNAME)
+git remote add fork https://github.com/YOUR_USERNAME/lcdb.org.git
+
+# 3. Create a branch for your work
+git checkout -b feat/my-change
+
+# 4. Make commits (remember: --signoff is mandatory, see Commit Messages above)
+
+# 5. Push to your fork
+git push fork feat/my-change
+
+# 6. Open a PR against lcdborg/lcdb.org main
+gh pr create --repo lcdborg/lcdb.org --head YOUR_USERNAME:feat/my-change --base main
+```
+
+All CI checks (currently: `yarn build`) must pass before a PR will be reviewed.
+
 ## Good First Issues
 
 TODO: label a set of starter issues on this repo and link to them here. Something like:
