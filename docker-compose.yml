@@ -1,0 +1,30 @@
+# Local development environment for lcdb.org (Next.js frontend).
+#
+# Usage:
+#   docker compose up           — start the dev server (http://localhost:3000)
+#   docker compose up --build   — rebuild after Dockerfile changes
+#   docker compose run web yarn add <pkg>  — add a package
+#
+# The GraphQL backend URL is controlled by NEXT_PUBLIC_GRAPHQL_SERVER in .env.local.
+# See .env.local.dist for configuration details.
+
+services:
+  web:
+    image: node:18-alpine
+    working_dir: /app
+    # Mount source for hot-reload; isolate node_modules in a named volume so
+    # that host (Mac/Windows) and container (Linux) binaries never mix.
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    # Install deps (idempotent) then start the Next.js dev server.
+    command: sh -c "yarn install && yarn dev"
+    environment:
+      # Explicitly tell Next.js dev server to bind on all interfaces inside
+      # the container so the port-forward reaches the host.
+      - HOSTNAME=0.0.0.0
+
+volumes:
+  node_modules:
